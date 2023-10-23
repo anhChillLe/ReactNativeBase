@@ -1,20 +1,21 @@
 import {Mail} from 'assets/icons'
+import {Center, KeyboardDismiss, TextField} from 'components'
 import Button from 'components/Base/Button'
 import Row from 'components/Layout/Row'
-import {ButtonMode, ButtonSize, ButtonVariant} from 'components/types'
+import {TextFieldMode, TextFieldSize, TextFieldVariant} from 'components/types'
 import {useState} from 'react'
-import {SafeAreaView, ScrollView, Switch, Text, View} from 'react-native'
+import {KeyboardAvoidingView, SafeAreaView, ScrollView, Switch, Text} from 'react-native'
 
-const variants: ButtonVariant[] = ['primary', 'secondary', 'error', 'normal']
-const modes: ButtonMode[] = ['filled', 'outlined', 'empty']
-const sizes: ButtonSize[] = ['small', 'medium', 'large']
+const variants: TextFieldVariant[] = ['primary', 'secondary', 'error']
+const modes: TextFieldMode[] = ['filled', 'outlined', 'underlined']
+const sizes: TextFieldSize[] = ['small', 'medium', 'large']
 
-const ButtonScreen = () => {
-  const [size, setSize] = useState<ButtonSize>('small')
-  const [mode, setMode] = useState<ButtonMode>('filled')
-  const [variant, setVariant] = useState<ButtonVariant>('primary')
-  const [isLoading, setLoading] = useState(false)
-  const [showIcon, setShowIcon] = useState(false)
+const TextFieldScreen = () => {
+  const [size, setSize] = useState<TextFieldSize>('small')
+  const [mode, setMode] = useState<TextFieldMode>('filled')
+  const [variant, setVariant] = useState<TextFieldVariant>('primary')
+  const [showLeadingIcon, setShowLeadingIcon] = useState(false)
+  const [showTrailingIcon, setShowTrailingIcon] = useState(false)
   const [disable, setDisable] = useState(false)
 
   return (
@@ -60,31 +61,30 @@ const ButtonScreen = () => {
           })}
         </Row>
         <Row style={{alignItems: 'center', gap: 16}}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>Isloading</Text>
-          <Switch value={isLoading} onChange={() => setLoading(loading => !loading)} />
+          <Text style={{fontSize: 20, fontWeight: '500'}}>Show Leading Icon</Text>
+          <Switch value={showLeadingIcon} onChange={() => setShowLeadingIcon(show => !show)} />
         </Row>
         <Row style={{alignItems: 'center', gap: 16}}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>Show Icon</Text>
-          <Switch value={showIcon} onChange={() => setShowIcon(show => !show)} />
+          <Text style={{fontSize: 20, fontWeight: '500'}}>Show Trailing Icon</Text>
+          <Switch value={showTrailingIcon} onChange={() => setShowTrailingIcon(show => !show)} />
         </Row>
         <Row style={{alignItems: 'center', gap: 16}}>
           <Text style={{fontSize: 20, fontWeight: '500'}}>Disable</Text>
           <Switch value={disable} onChange={() => setDisable(disable => !disable)} />
         </Row>
-        <Row style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Button
-            Icon={showIcon ? Mail : undefined}
-            loading={isLoading}
-            variant={variant}
-            disabled={disable}
-            mode={mode}
-            size={size}
-            title="Click me"
-          />
-        </Row>
+        <KeyboardDismiss>
+          <Center style={{flex: 1, alignItems: 'stretch'}}>
+            <TextField
+              Leading={showLeadingIcon ? Mail : undefined}
+              Trailing={showTrailingIcon ? Mail : undefined}
+              {...{size, mode, variant}}
+              placeholder="Text field placeholder"
+            />
+          </Center>
+        </KeyboardDismiss>
       </ScrollView>
     </SafeAreaView>
   )
 }
 
-export default ButtonScreen
+export default TextFieldScreen

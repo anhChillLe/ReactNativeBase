@@ -12,11 +12,13 @@ export interface AppColor {
   background: string
   surface: string
   error: string
+  container: string
   onPrimary: string
   onSecondary: string
   onBackground: string
   onSurface: string
   onError: string
+  onContainer: string
 }
 
 export type Font = {

@@ -100,12 +100,14 @@ const lightColors: AppColor = {
   primary: '#6200EE',
   secondary: '#03DAC6',
   background: '#FFFFFF',
-  surface: '#999999',
+  surface: '#888888',
+  container: '#EEEEEE',
   error: '#B00020',
   onPrimary: '#FFFFFF',
   onSecondary: '#FFFFFF',
   onBackground: '#000000',
   onSurface: '#FFFFFF',
+  onContainer: '#222222',
   onError: '#FFFFFF',
 }
 
@@ -130,9 +132,9 @@ const useNavigationTheme = () => {
     colors: {
       primary: colors.primary,
       background: colors.background,
-      card: colors.surface,
+      card: colors.background,
       text: colors.onBackground,
-      border: colors.surface,
+      border: colors.background,
       notification: colors.primary,
     },
   }

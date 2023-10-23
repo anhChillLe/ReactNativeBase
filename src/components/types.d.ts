@@ -3,15 +3,16 @@ import {StyleProp, TextInputProps, TextStyle, TouchableOpacityProps, ViewStyle} 
 
 type VStyle = StyleProp<ViewStyle>
 type TStyle = StyleProp<TextStyle>
-type Variant = 'primary' | 'normal' | 'secondary' | 'error'
+type ButtonVariant = 'primary' | 'normal' | 'secondary' | 'error'
 type ButtonMode = 'outlined' | 'filled' | 'empty'
 type ButtonSize = 'small' | 'medium' | 'large'
 type TextFieldMode = 'underlined' | 'outlined' | 'filled'
 type TextFieldSize = 'small' | 'medium' | 'large'
+type TextFieldVariant = 'primary' | 'secondary' | 'error'
 
 interface ButtonBaseProps extends Omit<TouchableOpacityProps, 'children'> {
   mode?: ButtonMode
-  variant?: Variant
+  variant?: ButtonVariant
   size?: ButtonSize
 }
 
@@ -31,6 +32,6 @@ interface TextFieldProps extends TextInputProps {
   Leading?: Icon
   Trailing?: Icon
   size?: TextFieldSize
-  variant?: Variant
+  variant?: TextFieldVariant
   mode?: TextFieldMode
 }
