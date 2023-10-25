@@ -1,5 +1,5 @@
 import { AppColor, useAppTheme } from 'components/theme'
-import { ButtonSize, IconButtonProps, Variant } from 'components/types'
+import { ButtonSize, IconButtonProps, ButtonVariant } from 'components/types'
 import { FC, ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
@@ -10,9 +10,10 @@ const IconButton: FC<IconButtonProps> = ({
   badge,
   Icon,
   style,
+  theme: overideTheme,
   ...props
 }): ReactElement => {
-  const {colors, roundness} = useAppTheme()
+  const {colors, roundness} = useAppTheme(overideTheme)
   const styles =
     mode == 'outlined'
       ? outlinedButtonStyles(variant, colors)
@@ -73,8 +74,8 @@ const buttonStyles = StyleSheet.create({
   },
 })
 
-const outlinedButtonStyles = (variant: Variant, colors: AppColor) => {
-  const colorMap: Record<Variant, keyof AppColor> = {
+const outlinedButtonStyles = (variant: ButtonVariant, colors: AppColor) => {
+  const colorMap: Record<ButtonVariant, keyof AppColor> = {
     primary: 'primary',
     secondary: 'secondary',
     error: 'error',
@@ -91,14 +92,14 @@ const outlinedButtonStyles = (variant: Variant, colors: AppColor) => {
   })
 }
 
-const filledButtonStyles = (variant: Variant, colors: AppColor) => {
-  const bgColorsMap: Record<Variant, keyof AppColor> = {
+const filledButtonStyles = (variant: ButtonVariant, colors: AppColor) => {
+  const bgColorsMap: Record<ButtonVariant, keyof AppColor> = {
     primary: 'primary',
     secondary: 'secondary',
     error: 'error',
     normal: 'surface',
   }
-  const titleColorMap: Record<Variant, keyof AppColor> = {
+  const titleColorMap: Record<ButtonVariant, keyof AppColor> = {
     primary: 'onPrimary',
     secondary: 'onSecondary',
     error: 'onError',
@@ -116,8 +117,8 @@ const filledButtonStyles = (variant: Variant, colors: AppColor) => {
   })
 }
 
-const textButtonStyles = (variant: Variant, colors: AppColor) => {
-  const colorsMap: Record<Variant, keyof AppColor> = {
+const textButtonStyles = (variant: ButtonVariant, colors: AppColor) => {
+  const colorsMap: Record<ButtonVariant, keyof AppColor> = {
     primary: 'primary',
     secondary: 'secondary',
     error: 'error',

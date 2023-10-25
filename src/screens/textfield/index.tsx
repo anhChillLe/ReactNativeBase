@@ -16,6 +16,7 @@ const TextFieldScreen = () => {
   const [variant, setVariant] = useState<TextFieldVariant>('primary')
   const [showLeadingIcon, setShowLeadingIcon] = useState(false)
   const [showTrailingIcon, setShowTrailingIcon] = useState(false)
+  const [multiline, setMultiline] = useState(false)
   const [disable, setDisable] = useState(false)
 
   return (
@@ -72,12 +73,17 @@ const TextFieldScreen = () => {
           <Text style={{fontSize: 20, fontWeight: '500'}}>Disable</Text>
           <Switch value={disable} onChange={() => setDisable(disable => !disable)} />
         </Row>
+        <Row style={{alignItems: 'center', gap: 16}}>
+          <Text style={{fontSize: 20, fontWeight: '500'}}>Multiline</Text>
+          <Switch value={multiline} onChange={() => setMultiline(disable => !disable)} />
+        </Row>
         <KeyboardDismiss>
           <Center style={{flex: 1, alignItems: 'stretch'}}>
             <TextField
               Leading={showLeadingIcon ? Mail : undefined}
               Trailing={showTrailingIcon ? Mail : undefined}
               {...{size, mode, variant}}
+              multiline={multiline}
               placeholder="Text field placeholder"
             />
           </Center>

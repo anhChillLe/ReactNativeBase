@@ -1,4 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native'
+import GlobalPopup from 'components/Provider/PopupProvider'
 import {DefaultLightTheme, ThemeProvider, useNavigationTheme} from 'components/theme'
 import MainDrawer from 'navigations/main_drawer'
 import React from 'react'
@@ -12,7 +13,9 @@ const App = () => {
       <NavigationContainer theme={navTheme}>
         <MainDrawer />
       </NavigationContainer>
+      <GlobalPopup />
     </ThemeProvider>
   )
 }
 export default App
+

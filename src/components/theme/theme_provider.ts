@@ -120,9 +120,22 @@ const appLightTheme: AppTheme = {
 
 const ThemeContext = createContext<AppTheme>(appLightTheme)
 
-const useAppTheme = () => {
+const useAppTheme = (overideTheme?: AppTheme): AppTheme => {
   const theme = useContext(ThemeContext)
-  return theme
+  return overideTheme
+    ? {
+        ...theme,
+        ...overideTheme,
+        colors: {
+          ...theme.colors,
+          ...overideTheme?.colors,
+        },
+        typography: {
+          ...theme.typography,
+          ...overideTheme?.typography,
+        },
+      }
+    : theme
 }
 
 const useNavigationTheme = () => {
