@@ -1,9 +1,9 @@
-import {Mail} from 'assets/icons'
+import { Mail } from 'assets/icons'
 import Button from 'components/Base/Button'
 import Row from 'components/Layout/Row'
-import {ButtonMode, ButtonSize, ButtonVariant} from 'components/types'
-import {useState} from 'react'
-import {SafeAreaView, ScrollView, Switch, Text, View} from 'react-native'
+import { ButtonMode, ButtonSize, ButtonVariant } from 'components/types'
+import { useState } from 'react'
+import { SafeAreaView, ScrollView, Switch, Text } from 'react-native'
 
 const variants: ButtonVariant[] = ['primary', 'secondary', 'error', 'normal']
 const modes: ButtonMode[] = ['filled', 'outlined', 'empty']
@@ -20,6 +20,24 @@ const ButtonScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={{padding: 16, flexGrow: 1, gap: 16}}>
+        <Row style={{padding: 32, alignItems: 'center', justifyContent: 'center'}}>
+          <Button
+            Icon={showIcon ? Mail : undefined}
+            loading={isLoading}
+            disabled={disable}
+            variant={variant}
+            mode={mode}
+            size={size}
+            title="Show modal"
+            // onPress={() =>
+            //   PopupController.push({
+            //     dismissable: true,
+            //     element: <Button title="Click me" />,
+            //   })
+            // }
+          />
+        </Row>
+
         <Row style={{alignItems: 'center', gap: 8}}>
           {variants.map(vr => {
             return (
@@ -71,16 +89,23 @@ const ButtonScreen = () => {
           <Text style={{fontSize: 20, fontWeight: '500'}}>Disable</Text>
           <Switch value={disable} onChange={() => setDisable(disable => !disable)} />
         </Row>
-        <Row style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Button
-            Icon={showIcon ? Mail : undefined}
-            loading={isLoading}
-            variant={variant}
-            disabled={disable}
-            mode={mode}
-            size={size}
-            title="Click me"
-          />
+        <Row style={{flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'center'}}>
+          {modes.map(mode => {
+            return variants.map(variant => {
+              return sizes.map(size => {
+                return (
+                  <Button
+                    Icon={showIcon ? Mail : undefined}
+                    loading={isLoading}
+                    disabled={disable}
+                    {...{variant, mode, size}}
+                    style={{flexGrow: 1}}
+                    title="Click me"
+                  />
+                )
+              })
+            })
+          })}
         </Row>
       </ScrollView>
     </SafeAreaView>
