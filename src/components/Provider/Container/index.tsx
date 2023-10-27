@@ -1,3 +1,4 @@
+import { useAppTheme } from 'components/theme'
 import {FC, useEffect, useState} from 'react'
 import {
   Modal,
@@ -39,6 +40,7 @@ const ModalContainer: FC<ModalBackdropProps> = ({
   opacity: maxOpacity = 0.25,
   ...props
 }) => {
+  const {colors} = useAppTheme()
   const [modalVisible, setModalvisible] = useState(false)
   const opacity = useSharedValue(0)
 
@@ -67,8 +69,6 @@ const ModalContainer: FC<ModalBackdropProps> = ({
     }
   }, [visible])
 
-  // const top = useSlideFromTop(!!visible)
-
   return (
     <Modal
       visible={modalVisible}
@@ -76,7 +76,7 @@ const ModalContainer: FC<ModalBackdropProps> = ({
       animationType="none"
       onRequestClose={onRequestClose}
       {...props}>
-      <Animated.View style={[styles.backdrop, {opacity}]}/>
+      <Animated.View style={[styles.backdrop, {backgroundColor: colors.scrim}, {opacity}]}/>
       <SafeAreaView style={{flex: 1}}>
         <Pressable
           style={[styles.backdropTouch, {justifyContent: positionMap[position]}]}
@@ -102,7 +102,6 @@ const positionMap = {
 const styles = StyleSheet.create({
   backdrop: {
     flex: 1,
-    backgroundColor: 'black',
     position: 'absolute',
     top: 0,
     bottom: 0,

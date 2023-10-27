@@ -1,5 +1,6 @@
-import {Button, Center} from 'components'
+import {Button, Center, Screen} from 'components'
 import {PopupController} from 'components/Provider/GlobalModal'
+import { useAppTheme } from 'components/theme'
 import {Dimensions, SafeAreaView, Text} from 'react-native'
 
 const ModalControllerScreen = () => {
@@ -13,35 +14,29 @@ const ModalControllerScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <Screen>
       <Center style={{flex: 1, gap: 16}}>
         <Button title="Open modal" onPress={showConfirm} />
       </Center>
-    </SafeAreaView>
+    </Screen>
   )
 }
 
 export default ModalControllerScreen
 
 const Popup = () => {
+  const {isDark, colors: {primary, onPrimary}} = useAppTheme()
   return (
     <Center
       style={{
-        backgroundColor: 'green',
+        backgroundColor: primary,
         width: Dimensions.get('window').width - 16,
         borderRadius: 8,
         gap: 16,
         padding: 16,
         alignItems: 'stretch',
-        shadowOffset: {
-          height: 2,
-          width: 2
-        },
-        shadowRadius: 8,
-        shadowColor: 'green',
-        shadowOpacity: 0.5
       }}>
-      <Text style={{fontSize: 16, fontWeight: '500', color: 'white'}}>Login success</Text>
+      <Text style={{fontSize: 16, fontWeight: '500', color: onPrimary}}>Login success</Text>
     </Center>
   )
 }

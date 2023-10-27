@@ -1,14 +1,46 @@
-import { FC } from "react";
-import { StyleSheet, View, ViewProps } from "react-native";
+import {useAppTheme} from 'components/theme'
+import {ScreenProps} from 'components/types'
+import {FC} from 'react'
+import {SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from 'react-native'
 
-const Screen: FC<ViewProps> = ({style, ...props}) => {
-  return <View style={[styles.container, style]} {...props}/>
+const Screen: FC<ScreenProps> = ({
+  style,
+  appBar,
+  dismissKeyboard,
+  scrollable,
+  children,
+  contentContainerStyle,
+  statusBarstyle,
+  ...props
+}) => {
+  const {
+    isDark,
+    colors: {background},
+  } = useAppTheme()
+  const Container = scrollable ? ScrollView : View
+
+  return (
+    <SafeAreaView style={[styles.container, {backgroundColor: background}]}>
+      <StatusBar
+        backgroundColor={background}
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+      />
+      {appBar}
+      <Container
+        style={[styles.container, style]}
+        {...props}
+        contentContainerStyle={[{flexGrow: 1}, contentContainerStyle]}
+        automaticallyAdjustKeyboardInsets>
+        {children}
+      </Container>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+  },
 })
 
 export default Screen

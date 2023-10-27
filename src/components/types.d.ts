@@ -1,12 +1,15 @@
 import {Icon} from 'assets/icons'
 import {AppTheme, FontVariant} from 'components/theme'
+import {ReactElement} from 'react'
 import {
   GestureResponderEvent,
+  PressableProps,
   TextProps as RNTextProps,
   StyleProp,
   TextInputProps,
   TextStyle,
   TouchableOpacityProps,
+  TouchableWithoutFeedbackProps,
   ViewProps,
   ViewStyle,
 } from 'react-native'
@@ -15,7 +18,7 @@ import {NumberProp} from 'react-native-svg'
 type VStyle = StyleProp<ViewStyle>
 type TStyle = StyleProp<TextStyle>
 
-type ButtonVariant = 'primary' | 'normal' | 'secondary' | 'error'
+type ButtonVariant = 'primary' | 'secondary' | 'error' | 'normal'
 type ButtonMode = 'outlined' | 'filled' | 'empty'
 type ButtonSize = 'small' | 'medium' | 'large'
 
@@ -23,10 +26,13 @@ type TextFieldMode = 'underlined' | 'outlined' | 'filled'
 type TextFieldSize = 'small' | 'medium' | 'large'
 type TextFieldVariant = 'primary' | 'secondary' | 'error'
 
-type TextVariant = keyof typeof FontVariant
+type TextVariant = keyof Typography
 
 type CheckBoxVariant = 'primary' | 'secondary'
 type CheckBoxSize = 'small' | 'medium' | 'large'
+
+type CardMode = 'filled' | 'outlined'
+type ChipMode = 'filled' | 'outlined'
 
 interface ButtonBaseProps extends Omit<TouchableOpacityProps, 'children'> {
   mode?: ButtonMode
@@ -85,7 +91,20 @@ interface RadioButtonProps extends CheckableProps {
   variant?: CheckBoxVariant
 }
 
-interface RadioButtonGroupProps extends ViewProps {
-  VALUE?: any,
-  onValueChange?: any
+interface ScreenProps extends ViewProps {
+  scrollable?: boolean
+  appBar?: ReactElement
+  dismissKeyboard?: boolean
+  statusBarstyle?: 'light' | 'dark'
+  contentContainerStyle?: VStyle
+}
+interface CardProps extends TouchableWithoutFeedbackProps {
+  mode?: CardMode
+}
+
+interface ChipProps extends Omit<TouchableOpacityProps, 'children'> {
+  Leading?: Icon,
+  Trailing?: Icon,
+  title: string
+  mode?: ChipMode
 }

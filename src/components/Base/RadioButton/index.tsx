@@ -1,9 +1,7 @@
-import {Check} from 'assets/icons'
-import {useAppTheme} from 'components/theme'
-import {ButtonSize, CheckBoxProps, RadioButtonProps, VStyle} from 'components/types'
-import {FC} from 'react'
-import {Pressable, View} from 'react-native'
-import {Circle} from 'react-native-svg'
+import { useAppTheme } from 'components/theme'
+import { ButtonSize, RadioButtonProps, VStyle } from 'components/types'
+import { FC } from 'react'
+import { Pressable, View } from 'react-native'
 
 const RadioButton: FC<RadioButtonProps> = ({
   checked,
@@ -22,7 +20,7 @@ const RadioButton: FC<RadioButtonProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: sizeMap[size].container / 12,
-    borderColor: checked ? colors[variant] : colors.surface,
+    borderColor: checked ? colors[variant] : colors.onSurfaceVariant,
   }
 
   const innerStyle: VStyle = {

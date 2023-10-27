@@ -1,4 +1,4 @@
-import { AppColor, useAppTheme } from 'components/theme'
+import { revertColor, useAppTheme } from 'components/theme'
 import { ButtonSize, IconButtonProps, ButtonVariant } from 'components/types'
 import { FC, ReactElement } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
@@ -74,12 +74,12 @@ const buttonStyles = StyleSheet.create({
   },
 })
 
-const outlinedButtonStyles = (variant: ButtonVariant, colors: AppColor) => {
-  const colorMap: Record<ButtonVariant, keyof AppColor> = {
+const outlinedButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
+  const colorMap: Record<ButtonVariant, keyof ColorScheme> = {
     primary: 'primary',
     secondary: 'secondary',
     error: 'error',
-    normal: 'surface',
+    normal: 'onSurfaceVariant',
   }
 
   return StyleSheet.create({
@@ -92,37 +92,33 @@ const outlinedButtonStyles = (variant: ButtonVariant, colors: AppColor) => {
   })
 }
 
-const filledButtonStyles = (variant: ButtonVariant, colors: AppColor) => {
-  const bgColorsMap: Record<ButtonVariant, keyof AppColor> = {
+const filledButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
+  const bgColorsMap: Record<ButtonVariant, keyof ColorScheme> = {
     primary: 'primary',
     secondary: 'secondary',
     error: 'error',
-    normal: 'surface',
+    normal: 'surfaceVariant',
   }
-  const titleColorMap: Record<ButtonVariant, keyof AppColor> = {
-    primary: 'onPrimary',
-    secondary: 'onSecondary',
-    error: 'onError',
-    normal: 'onSurface',
-  }
-
+  const containerColor =bgColorsMap[variant]
+  const iconColor = revertColor[containerColor]
+  
   return StyleSheet.create({
     container: {
-      backgroundColor: colors[bgColorsMap[variant]],
-      borderColor: colors[bgColorsMap[variant]],
+      backgroundColor: colors[containerColor],
+      borderColor: colors[containerColor],
     },
     icon: {
-      color: colors[titleColorMap[variant]],
+      color: colors[iconColor],
     },
   })
 }
 
-const textButtonStyles = (variant: ButtonVariant, colors: AppColor) => {
-  const colorsMap: Record<ButtonVariant, keyof AppColor> = {
+const textButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
+  const colorsMap: Record<ButtonVariant, keyof ColorScheme> = {
     primary: 'primary',
     secondary: 'secondary',
     error: 'error',
-    normal: 'surface',
+    normal: 'onSurfaceVariant',
   }
 
   return StyleSheet.create({

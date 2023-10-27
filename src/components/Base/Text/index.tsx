@@ -1,11 +1,13 @@
 import {useAppTheme} from 'components/theme'
-import {TextProps} from 'components/types'
+import {TStyle, TextProps} from 'components/types'
 import {FC} from 'react'
-import {Text as RNText} from 'react-native'
+import {Text as RNText, StyleSheet} from 'react-native'
 
-const Text: FC<TextProps> = ({variant = 'labelMedium', style, ...props}) => {
-  const {typography} = useAppTheme()
-  return <RNText style={[typography[variant], style]} {...props} />
+const Text: FC<TextProps> = ({variant, style, ...props}) => {
+  const {colors, typography} = useAppTheme()
+  const variantStye: TStyle = variant ? typography[variant] : {}
+  const textStyle = StyleSheet.flatten([variantStye, {color: colors.onBackground}, style])
+  return <RNText style={textStyle} {...props} />
 }
 
 export default Text

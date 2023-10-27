@@ -22,13 +22,13 @@ const CheckBox: FC<CheckBoxProps> = ({
     borderRadius: sizeMap[size].container / 4,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: checked ? colors[variant] : colors.surface,
+    borderWidth: sizeMap[size].container / 12,
+    borderColor: checked ? colors[variant] : colors.onSurfaceVariant,
   }
 
   return (
     <Pressable style={containerStyle} onPress={() => onCheckedChange(!checked)} {...props}>
-      <Icon width="100%" height="100%" fill={colors.onPrimary} />
+      {checked && <Icon width="100%" height="100%" fill={colors.onPrimary} />}
     </Pressable>
   )
 }

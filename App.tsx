@@ -1,21 +1,30 @@
 import {NavigationContainer} from '@react-navigation/native'
 import GlobalPopup from 'components/Provider/GlobalModal'
-import {DefaultLightTheme, ThemeProvider, useNavigationTheme} from 'components/theme'
+import {ThemeProvider, useNavigationTheme} from 'components/theme'
+import {appDarkTheme, appLightTheme} from 'components/theme/default_theme'
 import MainDrawer from 'navigations/main_drawer'
 import React from 'react'
+import {useColorScheme} from 'react-native'
 import 'react-native-gesture-handler'
 
 const App = () => {
-  const navTheme = useNavigationTheme()
+  const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider value={DefaultLightTheme}>
-      <NavigationContainer theme={navTheme}>
-        <MainDrawer />
-      </NavigationContainer>
+    <ThemeProvider value={colorScheme == 'light' ? appLightTheme : appDarkTheme}>
+      <RootNavigation />
       <GlobalPopup />
     </ThemeProvider>
   )
 }
-export default App
 
+const RootNavigation = () => {
+  const navTheme = useNavigationTheme()
+  return (
+    <NavigationContainer theme={navTheme}>
+      <MainDrawer />
+    </NavigationContainer>
+  )
+}
+
+export default App

@@ -1,0 +1,231 @@
+{
+  "seed": "#2E331D",
+  "name": "material-theme",
+  "description": "TYPE: DYNAMIC",
+  "baseline": false,
+  "extendedColors": [],
+  "coreColors": {
+    "primary": "#2E331D"
+  },
+  "schemes": {
+    "light": {
+      "primary": "#526600",
+      "onPrimary": "#ffffff",
+      "primaryContainer": "#d4ed7f",
+      "onPrimaryContainer": "#171e00",
+      "primaryFixed": "#d4ed7f",
+      "onPrimaryFixed": "#171e00",
+      "primaryFixedDim": "#b8d166",
+      "onPrimaryFixedVariant": "#3d4d00",
+      "secondary": "#5b6146",
+      "onSecondary": "#ffffff",
+      "secondaryContainer": "#e0e6c4",
+      "onSecondaryContainer": "#191e08",
+      "secondaryFixed": "#e0e6c4",
+      "onSecondaryFixed": "#191e08",
+      "secondaryFixedDim": "#c4caa9",
+      "onSecondaryFixedVariant": "#444930",
+      "tertiary": "#3a665e",
+      "onTertiary": "#ffffff",
+      "tertiaryContainer": "#bdece1",
+      "onTertiaryContainer": "#00201b",
+      "tertiaryFixed": "#bdece1",
+      "onTertiaryFixed": "#00201b",
+      "tertiaryFixedDim": "#a1d0c5",
+      "onTertiaryFixedVariant": "#214e46",
+      "error": "#ba1a1a",
+      "errorContainer": "#ffdad6",
+      "onError": "#ffffff",
+      "onErrorContainer": "#410002",
+      "background": "#fefcf4",
+      "onBackground": "#1b1c17",
+      "outline": "#77786b",
+      "inverseOnSurface": "#f3f1e9",
+      "inverseSurface": "#30312b",
+      "inversePrimary": "#b8d166",
+      "shadow": "#000000",
+      "surfaceTint": "#526600",
+      "outlineVariant": "#c7c8b8",
+      "scrim": "#000000",
+      "surface": "#fbf9f1",
+      "onSurface": "#1b1c17",
+      "surfaceVariant": "#e3e4d3",
+      "onSurfaceVariant": "#46483c",
+      "surfaceContainerHighest": "#e4e3da",
+      "surfaceContainerHigh": "#eae8e0",
+      "surfaceContainer": "#f0eee6",
+      "surfaceContainerLow": "#f6f4eb",
+      "surfaceContainerLowest": "#ffffff",
+      "surfaceDim": "#dcdad2",
+      "surfaceBright": "#fbf9f1"
+    },
+    "dark": {
+      "primary": "#b8d166",
+      "onPrimary": "#293500",
+      "primaryContainer": "#3d4d00",
+      "onPrimaryContainer": "#d4ed7f",
+      "primaryFixed": "#d4ed7f",
+      "onPrimaryFixed": "#171e00",
+      "primaryFixedDim": "#b8d166",
+      "onPrimaryFixedVariant": "#3d4d00",
+      "secondary": "#c4caa9",
+      "onSecondary": "#2d331b",
+      "secondaryContainer": "#444930",
+      "onSecondaryContainer": "#e0e6c4",
+      "secondaryFixed": "#e0e6c4",
+      "onSecondaryFixed": "#191e08",
+      "secondaryFixedDim": "#c4caa9",
+      "onSecondaryFixedVariant": "#444930",
+      "tertiary": "#a1d0c5",
+      "onTertiary": "#033730",
+      "tertiaryContainer": "#214e46",
+      "onTertiaryContainer": "#bdece1",
+      "tertiaryFixed": "#bdece1",
+      "onTertiaryFixed": "#00201b",
+      "tertiaryFixedDim": "#a1d0c5",
+      "onTertiaryFixedVariant": "#214e46",
+      "error": "#ffb4ab",
+      "errorContainer": "#93000a",
+      "onError": "#690005",
+      "onErrorContainer": "#ffdad6",
+      "background": "#1b1c17",
+      "onBackground": "#e4e3da",
+      "outline": "#909283",
+      "inverseOnSurface": "#1b1c17",
+      "inverseSurface": "#e4e3da",
+      "inversePrimary": "#526600",
+      "shadow": "#000000",
+      "surfaceTint": "#b8d166",
+      "outlineVariant": "#46483c",
+      "scrim": "#000000",
+      "surface": "#13140f",
+      "onSurface": "#c8c7bf",
+      "surfaceVariant": "#46483c",
+      "onSurfaceVariant": "#c7c8b8",
+      "surfaceContainerHighest": "#353530",
+      "surfaceContainerHigh": "#2a2a25",
+      "surfaceContainer": "#1f201b",
+      "surfaceContainerLow": "#1b1c17",
+      "surfaceContainerLowest": "#0e0f0a",
+      "surfaceDim": "#13140f",
+      "surfaceBright": "#393a34"
+    }
+  },
+  "styles": {
+    "display": {
+      "large": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 57,
+        "lineHeight": 64,
+        "letterSpacing": -0.25
+      },
+      "medium": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 45,
+        "lineHeight": 52,
+        "letterSpacing": 0
+      },
+      "small": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 36,
+        "lineHeight": 44,
+        "letterSpacing": 0
+      }
+    },
+    "headline": {
+      "large": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 32,
+        "lineHeight": 40,
+        "letterSpacing": 0
+      },
+      "medium": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 28,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      },
+      "small": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 24,
+        "lineHeight": 32,
+        "letterSpacing": 0
+      }
+    },
+    "body": {
+      "large": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.5
+      },
+      "medium": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.25
+      },
+      "small": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0.4000000059604645
+      }
+    },
+    "label": {
+      "large": {
+        "fontFamily": "Roboto",
+        "fontWeight": "500",
+        "fontSize": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.10000000149011612
+      },
+      "medium": {
+        "fontFamily": "Roboto",
+        "fontWeight": "500",
+        "fontSize": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0.5
+      },
+      "small": {
+        "fontFamily": "Roboto",
+        "fontWeight": "500",
+        "fontSize": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0.5
+      }
+    },
+    "title": {
+      "large": {
+        "fontFamily": "Roboto",
+        "fontWeight": "400",
+        "fontSize": 22,
+        "lineHeight": 28,
+        "letterSpacing": 0
+      },
+      "medium": {
+        "fontFamily": "Roboto",
+        "fontWeight": "500",
+        "fontSize": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448
+      },
+      "small": {
+        "fontFamily": "Roboto",
+        "fontWeight": "500",
+        "fontSize": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.10000000149011612
+      }
+    }
+  }
+}

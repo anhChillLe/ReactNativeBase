@@ -1,10 +1,9 @@
 import {Mail} from 'assets/icons'
-import {Center, KeyboardDismiss, TextField} from 'components'
+import {Center, KeyboardDismiss, Screen, Switch, Text, TextField} from 'components'
 import Button from 'components/Base/Button'
 import Row from 'components/Layout/Row'
 import {TextFieldMode, TextFieldSize, TextFieldVariant} from 'components/types'
 import {useState} from 'react'
-import {KeyboardAvoidingView, SafeAreaView, ScrollView, Switch, Text} from 'react-native'
 
 const variants: TextFieldVariant[] = ['primary', 'secondary', 'error']
 const modes: TextFieldMode[] = ['filled', 'outlined', 'underlined']
@@ -20,76 +19,74 @@ const TextFieldScreen = () => {
   const [disable, setDisable] = useState(false)
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ScrollView contentContainerStyle={{padding: 16, flexGrow: 1, gap: 16}}>
-        <Row style={{alignItems: 'center', gap: 8}}>
-          {variants.map(vr => {
-            return (
-              <Button
-                key={vr}
-                mode="outlined"
-                variant={variant == vr ? 'primary' : 'normal'}
-                title={vr}
-                onPress={() => setVariant(vr)}
-              />
-            )
-          })}
-        </Row>
-        <Row style={{alignItems: 'center', gap: 8}}>
-          {modes.map(md => {
-            return (
-              <Button
-                key={md}
-                mode="outlined"
-                variant={mode == md ? 'primary' : 'normal'}
-                title={md}
-                onPress={() => setMode(md)}
-              />
-            )
-          })}
-        </Row>
-        <Row style={{alignItems: 'center', gap: 8}}>
-          {sizes.map(si => {
-            return (
-              <Button
-                key={si}
-                mode="outlined"
-                variant={size == si ? 'primary' : 'normal'}
-                title={si}
-                onPress={() => setSize(si)}
-              />
-            )
-          })}
-        </Row>
-        <Row style={{alignItems: 'center', gap: 16}}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>Show Leading Icon</Text>
-          <Switch value={showLeadingIcon} onChange={() => setShowLeadingIcon(show => !show)} />
-        </Row>
-        <Row style={{alignItems: 'center', gap: 16}}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>Show Trailing Icon</Text>
-          <Switch value={showTrailingIcon} onChange={() => setShowTrailingIcon(show => !show)} />
-        </Row>
-        <Row style={{alignItems: 'center', gap: 16}}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>Disable</Text>
-          <Switch value={disable} onChange={() => setDisable(disable => !disable)} />
-        </Row>
-        <Row style={{alignItems: 'center', gap: 16}}>
-          <Text style={{fontSize: 20, fontWeight: '500'}}>Multiline</Text>
-          <Switch value={multiline} onChange={() => setMultiline(disable => !disable)} />
-        </Row>
-        <KeyboardDismiss>
-          <Center style={{flex: 1, alignItems: 'stretch'}}>
-            <TextField
-              Leading={showLeadingIcon ? Mail : undefined}
-              Trailing={showTrailingIcon ? Mail : undefined}
-              {...{size, mode, variant}}
-              multiline={multiline}
-              placeholder="Text field placeholder"
+    <Screen scrollable contentContainerStyle={{padding: 16, flexGrow: 1, gap: 16}}>
+      <Row style={{alignItems: 'center', gap: 8}}>
+        {variants.map(vr => {
+          return (
+            <Button
+              key={vr}
+              mode="outlined"
+              variant={variant == vr ? 'primary' : 'normal'}
+              title={vr}
+              onPress={() => setVariant(vr)}
             />
-          </Center>
-        </KeyboardDismiss>
-      </ScrollView>
-    </SafeAreaView>
+          )
+        })}
+      </Row>
+      <Row style={{alignItems: 'center', gap: 8}}>
+        {modes.map(md => {
+          return (
+            <Button
+              key={md}
+              mode="outlined"
+              variant={mode == md ? 'primary' : 'normal'}
+              title={md}
+              onPress={() => setMode(md)}
+            />
+          )
+        })}
+      </Row>
+      <Row style={{alignItems: 'center', gap: 8}}>
+        {sizes.map(si => {
+          return (
+            <Button
+              key={si}
+              mode="outlined"
+              variant={size == si ? 'primary' : 'normal'}
+              title={si}
+              onPress={() => setSize(si)}
+            />
+          )
+        })}
+      </Row>
+      <Row style={{alignItems: 'center', gap: 16}}>
+        <Text variant="titleLarge">Show Leading Icon</Text>
+        <Switch value={showLeadingIcon} onValueChange={setShowLeadingIcon} />
+      </Row>
+      <Row style={{alignItems: 'center', gap: 16}}>
+        <Text variant="titleLarge">Show Trailing Icon</Text>
+        <Switch value={showTrailingIcon} onValueChange={setShowTrailingIcon} />
+      </Row>
+      <Row style={{alignItems: 'center', gap: 16}}>
+        <Text variant="titleLarge">Disable</Text>
+        <Switch value={disable} onValueChange={setDisable} />
+      </Row>
+      <Row style={{alignItems: 'center', gap: 16}}>
+        <Text variant="titleLarge">Multiline</Text>
+        <Switch value={multiline} onValueChange={setMultiline} />
+      </Row>
+      <KeyboardDismiss>
+        <Center style={{flex: 1, alignItems: 'stretch'}}>
+          <TextField
+            Leading={showLeadingIcon ? Mail : undefined}
+            Trailing={showTrailingIcon ? Mail : undefined}
+            {...{size, mode, variant}}
+            multiline={multiline}
+            placeholder="Text field placeholder"
+          />
+        </Center>
+      </KeyboardDismiss>
+    </Screen>
   )
 }
 

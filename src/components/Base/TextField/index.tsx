@@ -1,4 +1,4 @@
-import {AppTheme, useAppTheme} from 'components/theme'
+import {useAppTheme} from 'components/theme'
 import {TStyle, TextFieldProps, TextFieldSize, TextFieldVariant, VStyle} from 'components/types'
 import React, {FC, useState} from 'react'
 import {Platform, StyleSheet, TextInput} from 'react-native'
@@ -21,28 +21,21 @@ const TextField: FC<TextFieldProps> = ({
   const focus = () => setFocused(true)
   const blur = () => setFocused(false)
 
+  const fontMap: Record<TextFieldSize, keyof Typography> = {
+    small: 'bodySmall',
+    medium: 'bodyMedium',
+    large: 'bodyLarge',
+  }
+
   const sizeMap = getSizeMap()
-  const icSize = sizeMap[size].icon
-  const textSize = sizeMap[size].input
+  const icSize = theme.typography[fontMap[size]].fontSize
   const containerSize = sizeMap[size].container
 
   const containerStyle: VStyle = {
-    paddingVertical: Platform.select({
-      android: containerSize,
-      ios: containerSize,
-    }),
-    paddingHorizontal: containerSize,
-    // padding: 0,
+    padding: containerSize,
     flexDirection: 'row',
     alignItems: 'center',
     gap: containerSize / 2,
-  }
-
-  const inputStyle: TStyle = {
-    fontSize: textSize,
-    lineHeight: textSize,
-    paddingTop: 0,
-    paddingBottom: 0,
   }
 
   const styles = (() => {
@@ -57,22 +50,12 @@ const TextField: FC<TextFieldProps> = ({
   })()
 
   return (
-    <Animated.View
-      style={[containerStyle, styles.container]}
-      onLayout={e => {
-        console.log(Platform.OS, size, e.nativeEvent.layout.height)
-      }}>
+    <Animated.View style={[containerStyle, styles.container]}>
       {Leading && (
-        <Leading
-          width={icSize}
-          height={icSize}
-          onPress={onLeadingPress}
-          fill={isFocused ? theme.colors[variant] : styles.input.color}
-          style={styles.icon}
-        />
+        <Leading width={icSize} height={icSize} onPress={onLeadingPress} fill={styles.icon.color} />
       )}
       <TextInput
-        style={[{flex: 1}, inputStyle, styles.input, style]}
+        style={[{flex: 1}, theme.typography[fontMap[size]], {lineHeight: undefined, textAlignVertical: 'center'}]}
         onFocus={focus}
         onBlur={blur}
         blurOnSubmit
@@ -86,8 +69,7 @@ const TextField: FC<TextFieldProps> = ({
           width={icSize}
           height={icSize}
           onPress={onTrailingPress}
-          fill={isFocused ? theme.colors[variant] : styles.input.color}
-          style={styles.icon}
+          fill={styles.icon.color}
         />
       )}
     </Animated.View>
@@ -97,45 +79,23 @@ const TextField: FC<TextFieldProps> = ({
 type Sizes = {
   container: number
   icon: number
-  input: number
 }
 const getSizeMap = () => {
   const map: Record<TextFieldSize, Sizes> = {
     small: {
       container: 12,
       icon: 12,
-      input: 12,
     },
     medium: {
       container: 16,
       icon: 16,
-      input: 16,
     },
     large: {
       container: 18,
       icon: 18,
-      input: 18,
     },
   }
   return map
-}
-
-const outlinedStyles = (
-  {colors, roundness}: AppTheme,
-  variant: TextFieldVariant,
-  isFocus: boolean,
-) => {
-  return StyleSheet.create({
-    container: {
-      borderColor: isFocus ? colors[variant] : colors.surface,
-      borderWidth: 1,
-      borderRadius: roundness,
-    },
-    input: {
-      color: colors.onBackground,
-    },
-    icon: {},
-  })
 }
 
 const filledStyles = (
@@ -145,15 +105,37 @@ const filledStyles = (
 ) => {
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.container,
-      borderColor: isFocus ? colors[variant] : colors.container,
+      backgroundColor: colors.surfaceContainerHighest,
+      borderColor: isFocus ? colors[variant] : colors.surfaceContainerHighest,
       borderWidth: 1,
       borderRadius: roundness,
     },
     input: {
-      color: colors.onContainer,
+      color: colors.onSurfaceVariant,
     },
-    icon: {},
+    icon: {
+      color: isFocus ? colors[variant] : colors.onSurfaceVariant,
+    },
+  })
+}
+
+const outlinedStyles = (
+  {colors, roundness}: AppTheme,
+  variant: TextFieldVariant,
+  isFocus: boolean,
+) => {
+  return StyleSheet.create({
+    container: {
+      borderColor: isFocus ? colors[variant] : colors.onSurfaceVariant,
+      borderWidth: 1,
+      borderRadius: roundness,
+    },
+    input: {
+      color: colors.onBackground,
+    },
+    icon: {
+      color: isFocus ? colors[variant] : colors.onSurfaceVariant,
+    },
   })
 }
 
@@ -164,17 +146,19 @@ const underlinedStyles = (
 ) => {
   return StyleSheet.create({
     container: {
-      borderBottomColor: isFocus ? colors[variant] : colors.surface,
+      borderBottomColor: isFocus ? colors[variant] : colors.onSurfaceVariant,
       borderWidth: 1,
-      borderColor: colors.container,
-      backgroundColor: colors.container,
+      borderColor: colors.surfaceContainerHighest,
+      backgroundColor: colors.surfaceContainerHighest,
       borderTopLeftRadius: roundness,
       borderTopRightRadius: roundness,
     },
     input: {
-      color: colors.onContainer,
+      color: colors.onSurface,
     },
-    icon: {},
+    icon: {
+      color: isFocus ? colors[variant] : colors.onSurfaceVariant,
+    },
   })
 }
 
