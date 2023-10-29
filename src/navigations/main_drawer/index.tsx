@@ -1,6 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import {Bell, Mail, Menu} from 'assets/icons'
 import {IconButton, Row} from 'components'
+import {DrawerLayout} from 'navigations/main_drawer/drawer'
 import ButtonScreen from 'screens/button'
 import CardScreen from 'screens/card'
 import CheckBoxScreen from 'screens/checkbox'
@@ -9,13 +10,14 @@ import IconButtonScreen from 'screens/iconButton'
 import ModalControllerScreen from 'screens/modal'
 import TextScreen from 'screens/text'
 import TextFieldScreen from 'screens/textfield'
+import ThemePickerScreen from 'screens/theme'
 
 const Drawer = createDrawerNavigator()
 
 const MainDrawer = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="button"
+      initialRouteName="modal"
       screenOptions={({navigation}) => ({
         headerLeft: () => (
           <IconButton
@@ -28,21 +30,12 @@ const MainDrawer = () => {
         ),
         headerRight: () => (
           <Row>
-            <IconButton
-              Icon={Mail}
-              size="medium"
-              mode="empty"
-              variant="normal"
-            />
-            <IconButton
-              Icon={Bell}
-              size="medium"
-              mode="empty"
-              variant="normal"
-            />
+            <IconButton Icon={Mail} size="medium" mode="empty" variant="normal" />
+            <IconButton Icon={Bell} size="medium" mode="empty" variant="normal" />
           </Row>
         ),
-      })}>
+      })}
+      drawerContent={DrawerLayout}>
       <Drawer.Screen name="button" component={ButtonScreen} options={{title: 'Button'}} />
       <Drawer.Screen
         name="iconButton"
@@ -55,6 +48,7 @@ const MainDrawer = () => {
       <Drawer.Screen name="text" component={TextScreen} options={{title: 'Typography'}} />
       <Drawer.Screen name="card" component={CardScreen} options={{title: 'Card'}} />
       <Drawer.Screen name="chip" component={ChipScreen} options={{title: 'Chip'}} />
+      <Drawer.Screen name="theme" component={ThemePickerScreen} options={{title: 'Theme picker'}} />
     </Drawer.Navigator>
   )
 }

@@ -32,7 +32,11 @@ const TextField: FC<TextFieldProps> = ({
   const containerSize = sizeMap[size].container
 
   const containerStyle: VStyle = {
-    padding: containerSize,
+    paddingHorizontal: containerSize,
+    paddingVertical: Platform.select({
+      ios: containerSize, 
+      android:0
+    }),
     flexDirection: 'row',
     alignItems: 'center',
     gap: containerSize / 2,
@@ -55,7 +59,11 @@ const TextField: FC<TextFieldProps> = ({
         <Leading width={icSize} height={icSize} onPress={onLeadingPress} fill={styles.icon.color} />
       )}
       <TextInput
-        style={[{flex: 1}, theme.typography[fontMap[size]], {lineHeight: undefined, textAlignVertical: 'center'}]}
+        style={[
+          {flex: 1},
+          theme.typography[fontMap[size]],
+          {lineHeight: undefined, textAlignVertical: 'center'},
+        ]}
         onFocus={focus}
         onBlur={blur}
         blurOnSubmit

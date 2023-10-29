@@ -17,7 +17,7 @@ const CheckBox: FC<CheckBoxProps> = ({
   const containerStyle: VStyle = {
     backgroundColor: checked ? colors[variant] : 'transparent',
     aspectRatio: 1,
-    padding: sizeMap[size].container / 4,
+    padding: sizeMap[size].container / 8,
     width: sizeMap[size].container,
     borderRadius: sizeMap[size].container / 4,
     alignItems: 'center',

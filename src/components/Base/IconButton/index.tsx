@@ -1,7 +1,7 @@
-import { revertColor, useAppTheme } from 'components/theme'
-import { ButtonSize, IconButtonProps, ButtonVariant } from 'components/types'
-import { FC, ReactElement } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import {revertColor, useAppTheme} from 'components/theme'
+import {ButtonSize, IconButtonProps, ButtonVariant} from 'components/types'
+import {FC, ReactElement} from 'react'
+import {StyleSheet, TouchableOpacity} from 'react-native'
 
 const IconButton: FC<IconButtonProps> = ({
   mode = 'filled',
@@ -14,12 +14,18 @@ const IconButton: FC<IconButtonProps> = ({
   ...props
 }): ReactElement => {
   const {colors, roundness} = useAppTheme(overideTheme)
-  const styles =
-    mode == 'outlined'
-      ? outlinedButtonStyles(variant, colors)
-      : mode == 'filled'
-      ? filledButtonStyles(variant, colors)
-      : textButtonStyles(variant, colors)
+  const styles = (() => {
+    switch (mode) {
+      case 'outlined':
+        return outlinedButtonStyles(variant, colors)
+      case 'filled':
+        return filledButtonStyles(variant, colors)
+      case 'filled-total':
+        return filledTotalButtonStyles(variant, colors)
+      case 'empty':
+        return emptyButtonStyles(variant, colors)
+    }
+  })()
 
   const sizeMap: Record<
     ButtonSize,
@@ -52,9 +58,9 @@ const IconButton: FC<IconButtonProps> = ({
         styles.container,
         buttonStyles.container,
         {
-          borderRadius: sizeMap[size].roundness, 
+          borderRadius: sizeMap[size].roundness,
           opacity: props.disabled ? 0.5 : 1,
-          padding: sizeMap[size].container
+          padding: sizeMap[size].container,
         },
         style,
       ]}
@@ -78,6 +84,7 @@ const outlinedButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
   const colorMap: Record<ButtonVariant, keyof ColorScheme> = {
     primary: 'primary',
     secondary: 'secondary',
+    tertiary: 'tertiary',
     error: 'error',
     normal: 'onSurfaceVariant',
   }
@@ -96,12 +103,13 @@ const filledButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
   const bgColorsMap: Record<ButtonVariant, keyof ColorScheme> = {
     primary: 'primary',
     secondary: 'secondary',
+    tertiary: 'tertiary',
     error: 'error',
     normal: 'surfaceVariant',
   }
-  const containerColor =bgColorsMap[variant]
+  const containerColor = bgColorsMap[variant]
   const iconColor = revertColor[containerColor]
-  
+
   return StyleSheet.create({
     container: {
       backgroundColor: colors[containerColor],
@@ -113,10 +121,33 @@ const filledButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
   })
 }
 
-const textButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
+const filledTotalButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
+  const bgColorsMap: Record<ButtonVariant, keyof ColorScheme> = {
+    primary: 'primaryContainer',
+    secondary: 'secondaryContainer',
+    tertiary: 'tertiaryContainer',
+    error: 'errorContainer',
+    normal: 'surfaceContainer',
+  }
+  const containerColor = bgColorsMap[variant]
+  const iconColor = revertColor[containerColor]
+
+  return StyleSheet.create({
+    container: {
+      backgroundColor: colors[containerColor],
+      borderColor: colors[containerColor],
+    },
+    icon: {
+      color: colors[iconColor],
+    },
+  })
+}
+
+const emptyButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
   const colorsMap: Record<ButtonVariant, keyof ColorScheme> = {
     primary: 'primary',
     secondary: 'secondary',
+    tertiary: 'tertiary',
     error: 'error',
     normal: 'onSurfaceVariant',
   }

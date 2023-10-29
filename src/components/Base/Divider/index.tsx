@@ -5,8 +5,8 @@ import {Line, Svg} from 'react-native-svg'
 
 const Divider: FC<DividerProps> = ({width, height, mode = 'horizontal', color}) => {
   const {colors} = useAppTheme()
-  const defaultWidth =  mode == 'horizontal' ? '100%' : 1.5
-  const defaultHeight = mode == 'horizontal' ? 1.5 : '100%'
+  const defaultWidth =  mode == 'horizontal' ? '100%' : 1
+  const defaultHeight = mode == 'horizontal' ? 1 : '100%'
 
   return (
     <Svg height={height ?? defaultHeight} width={width ?? defaultWidth}>
@@ -16,7 +16,7 @@ const Divider: FC<DividerProps> = ({width, height, mode = 'horizontal', color}) 
           y1="0"
           x2='100%'
           y2="0"
-          stroke={color ?? colors.surface}
+          stroke={color ?? colors.outlineVariant}
           strokeWidth={'200%'}
           opacity={0.25}
         />
@@ -26,7 +26,7 @@ const Divider: FC<DividerProps> = ({width, height, mode = 'horizontal', color}) 
           y1="0"
           x2="0"
           y2="100%"
-          stroke={color ?? colors.surface}
+          stroke={color ?? colors.outlineVariant}
           strokeWidth={'200%'}
           opacity={0.25}
         />

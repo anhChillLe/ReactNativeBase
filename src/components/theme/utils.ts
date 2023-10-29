@@ -1,5 +1,3 @@
-import {Material3Theme, Styles} from 'components/theme/JsonTheme/type'
-
 export const revertColor: Record<string, keyof ColorScheme> = {
   primary: 'onPrimary',
   primaryContainer: 'onPrimaryContainer',
@@ -21,4 +19,10 @@ export const revertColor: Record<string, keyof ColorScheme> = {
   surface: 'onSurface',
   surfaceVariant: 'onSurfaceVariant',
   inverseSurface: 'inverseOnSurface',
+  
+  surfaceContainerHighest: 'onBackground',
+  surfaceContainerHigh: 'onBackground',
+  surfaceContainer: 'onBackground',
+  surfaceContainerLow: 'onBackground',
+  surfaceContainerLowest: 'onBackground',
 }

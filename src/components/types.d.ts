@@ -18,8 +18,8 @@ import {NumberProp} from 'react-native-svg'
 type VStyle = StyleProp<ViewStyle>
 type TStyle = StyleProp<TextStyle>
 
-type ButtonVariant = 'primary' | 'secondary' | 'error' | 'normal'
-type ButtonMode = 'outlined' | 'filled' | 'empty'
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary' |'error' | 'normal'
+type ButtonMode = 'outlined' | 'filled' | 'filled-total' | 'empty'
 type ButtonSize = 'small' | 'medium' | 'large'
 
 type TextFieldMode = 'underlined' | 'outlined' | 'filled'
@@ -33,6 +33,8 @@ type CheckBoxSize = 'small' | 'medium' | 'large'
 
 type CardMode = 'filled' | 'outlined'
 type ChipMode = 'filled' | 'outlined'
+
+type NotificationVariant = 'success' | 'error' | 'warning' | 'normal'
 
 interface ButtonBaseProps extends Omit<TouchableOpacityProps, 'children'> {
   mode?: ButtonMode
@@ -103,8 +105,30 @@ interface CardProps extends TouchableWithoutFeedbackProps {
 }
 
 interface ChipProps extends Omit<TouchableOpacityProps, 'children'> {
-  Leading?: Icon,
-  Trailing?: Icon,
+  Leading?: Icon
+  Trailing?: Icon
   title: string
   mode?: ChipMode
+}
+
+interface ConfirmPopupProps extends ViewProps {
+  Icon?: Icon
+  title: string
+  message: string
+  positive: {
+    title: string
+    onPress?: () => void
+  }
+  negative?: {
+    title: string
+    onPress?: () => void
+  }
+  neutral?: {
+    title: string
+    onPress?: () => void
+  }
+}
+
+interface PopupNotificationProps extends ViewProps {
+  variant?: NotificationVariant
 }

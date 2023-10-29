@@ -1,16 +1,15 @@
-import {Mail} from 'assets/icons'
-import {Screen, Switch, Text} from 'components'
-import Button from 'components/Base/Button'
-import Row from 'components/Layout/Row'
-import {ButtonMode, ButtonSize, ButtonVariant} from 'components/types'
-import {useState} from 'react'
+import { Mail } from 'assets/icons'
+import { Button, Card, Center, Column, Fill, Row, Screen, Switch, Text } from 'components'
+import { ButtonMode, ButtonSize, ButtonVariant } from 'components/types'
+import { useState } from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
 
-const variants: ButtonVariant[] = ['primary', 'secondary', 'error', 'normal']
-const modes: ButtonMode[] = ['filled', 'outlined', 'empty']
+const variants: ButtonVariant[] = ['primary', 'secondary', 'tertiary', 'error', 'normal']
+const modes: ButtonMode[] = ['filled', 'filled-total', 'outlined', 'empty']
 const sizes: ButtonSize[] = ['small', 'medium', 'large']
 
 const ButtonScreen = () => {
-  const [size, setSize] = useState<ButtonSize>('small')
+  const [size, setSize] = useState<ButtonSize>('medium')
   const [mode, setMode] = useState<ButtonMode>('filled')
   const [variant, setVariant] = useState<ButtonVariant>('primary')
   const [isLoading, setLoading] = useState(false)
@@ -19,7 +18,7 @@ const ButtonScreen = () => {
 
   return (
     <Screen scrollable contentContainerStyle={{paddingHorizontal: 16, gap: 8}}>
-      <Row style={{padding: 32, alignItems: 'center', justifyContent: 'center'}}>
+      <Center style={{padding: 32}}>
         <Button
           Icon={showIcon ? Mail : undefined}
           loading={isLoading}
@@ -29,9 +28,12 @@ const ButtonScreen = () => {
           size={size}
           title="Show modal"
         />
-      </Row>
+      </Center>
 
-      <Row style={{alignItems: 'center', gap: 8}}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{alignItems: 'center', gap: 8}}>
         {variants.map(vr => {
           return (
             <Button
@@ -43,8 +45,12 @@ const ButtonScreen = () => {
             />
           )
         })}
-      </Row>
-      <Row style={{alignItems: 'center', gap: 8}}>
+      </ScrollView>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{alignItems: 'center', gap: 8}}>
         {modes.map(md => {
           return (
             <Button
@@ -56,8 +62,12 @@ const ButtonScreen = () => {
             />
           )
         })}
-      </Row>
-      <Row style={{alignItems: 'center', gap: 8}}>
+      </ScrollView>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{alignItems: 'center', gap: 8}}>
         {sizes.map(si => {
           return (
             <Button
@@ -69,40 +79,43 @@ const ButtonScreen = () => {
             />
           )
         })}
-      </Row>
-      <Row style={{alignItems: 'center', gap: 16}}>
-        <Text variant="titleLarge">Isloading</Text>
-        <Switch value={isLoading} onValueChange={setLoading} />
-      </Row>
-      <Row style={{alignItems: 'center', gap: 16}}>
-        <Text variant="titleLarge">Show Icon</Text>
-        <Switch value={showIcon} onValueChange={setShowIcon} />
-      </Row>
-      <Row style={{alignItems: 'center', gap: 16}}>
-        <Text variant="titleLarge">Disable</Text>
-        <Switch value={disable} onValueChange={setDisable} />
-      </Row>
-      <Row style={{flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'center'}}>
-        {modes.map(mode => {
-          return variants.map(variant => {
-            return sizes.map(size => {
-              return (
-                <Button
-                  key={variant + mode + size}
-                  Icon={showIcon ? Mail : undefined}
-                  loading={isLoading}
-                  disabled={disable}
-                  {...{variant, mode, size}}
-                  style={{flexGrow: 1}}
-                  title="Click me"
-                />
-              )
-            })
-          })
+      </ScrollView>
+
+      <Column style={{gap: 8, paddingVertical: 8}}>
+        <Card mode="outlined" style={styles.card}>
+          <Text variant="titleMedium">Isloading</Text>
+          <Fill />
+          <Switch value={isLoading} onValueChange={setLoading} />
+        </Card>
+        <Card mode="outlined" style={styles.card}>
+          <Text variant="titleMedium">Show Icon</Text>
+          <Fill />
+          <Switch value={showIcon} onValueChange={setShowIcon} />
+        </Card>
+        <Card mode="outlined" style={styles.card}>
+          <Text variant="titleMedium">Disable</Text>
+          <Fill />
+          <Switch value={disable} onValueChange={setDisable} />
+        </Card>
+      </Column>
+
+      <Column style={{gap: 16, alignItems: 'stretch', justifyContent: 'space-between'}}>
+        {variants.map(variant => {
+          return (
+            <Row key={variant} style={{alignItems: 'center', justifyContent: 'space-between'}}>
+              {modes.map(mode => {
+                return <Button key={mode} {...{variant, mode}} size="small" title="Click me" />
+              })}
+            </Row>
+          )
         })}
-      </Row>
+      </Column>
     </Screen>
   )
 }
+
+const styles = StyleSheet.create({
+  card: {alignItems: 'center', flexDirection: 'row', gap: 16, padding: 16},
+})
 
 export default ButtonScreen

@@ -20,7 +20,6 @@ const variants: (keyof Typography)[] = [
 ]
 
 const TextScreen = () => {
-  console.log(variants)
   return (
     <Screen scrollable contentContainerStyle={{gap: 8, flexGrow: 1, padding: 16}}>
       {variants.map(variant => (

@@ -1,8 +1,10 @@
-import { useAppTheme } from 'components/theme'
-import { FC, useEffect } from 'react'
-import { Pressable, StyleSheet, SwitchProps } from 'react-native'
+import {useAppTheme} from 'components/theme'
+import {VStyle} from 'components/types'
+import {FC, useEffect} from 'react'
+import {Pressable, StyleSheet, SwitchProps} from 'react-native'
 import Animated, {
   Easing,
+  interpolate,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
@@ -10,40 +12,50 @@ import Animated, {
 } from 'react-native-reanimated'
 
 const CustomSwitch: FC<SwitchProps> = ({value, onValueChange}) => {
-  const {colors} = useAppTheme()
+  const {colors, isDark} = useAppTheme()
   const fillFlex = useSharedValue(0)
 
-  const trackStyle = useAnimatedStyle(() => {
+  const trackAnimatedStyle = useAnimatedStyle(() => {
     return {
-      width: 24,
+      width: interpolate(fillFlex.value, [0, 1], [16, 24]),
       backgroundColor: interpolateColor(fillFlex.value, [0, 1], [colors.outline, colors.onPrimary]),
-      margin: 4,
+      margin: interpolate(fillFlex.value, [0, 1], [8, 4]),
     }
-  }, [value])
+  }, [value, isDark, colors])
 
-  const containerStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: interpolateColor(fillFlex.value, [0, 1], [colors.surfaceVariant, colors.primary]),
-    }
-  }, [value])
+  const containerAnimatedStyle = useAnimatedStyle(
+    () => ({
+      backgroundColor: interpolateColor(
+        fillFlex.value,
+        [0, 1],
+        [colors.surfaceVariant, colors.primary],
+      ),
+    }),
+    [value, isDark, colors],
+  )
 
-  const fillstyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: interpolateColor(fillFlex.value, [0, 1], [colors.surfaceVariant, colors.primary]),
+  const fillAnimatedStyle = useAnimatedStyle(
+    () => ({
+      backgroundColor: interpolateColor(
+        fillFlex.value,
+        [0, 1],
+        [colors.surfaceVariant, colors.primary],
+      ),
       flex: fillFlex.value,
-    }
-  }, [value])
+    }),
+    [value, isDark, colors],
+  )
 
   useEffect(() => {
     if (value) {
       fillFlex.value = withTiming(1, {
         easing: Easing.ease,
-        duration: 200,
+        duration: 100,
       })
     } else {
       fillFlex.value = withTiming(0, {
         easing: Easing.ease,
-        duration: 200,
+        duration: 100,
       })
     }
   }, [value])
@@ -53,9 +65,9 @@ const CustomSwitch: FC<SwitchProps> = ({value, onValueChange}) => {
       onTouchStart={() => {
         onValueChange && onValueChange(!value)
       }}>
-      <Animated.View style={[styles.container, containerStyle]}>
-        <Animated.View style={[fillstyle]} />
-        <Animated.View style={[styles.track, trackStyle]} />
+      <Animated.View style={[styles.container, containerAnimatedStyle]}>
+        <Animated.View style={[fillAnimatedStyle]} />
+        <Animated.View style={[styles.track, trackAnimatedStyle]} />
       </Animated.View>
     </Pressable>
   )
@@ -71,7 +83,7 @@ const styles = StyleSheet.create({
   },
   track: {
     aspectRatio: 1,
-    borderRadius: 14,
+    borderRadius: 20,
   },
 })
 

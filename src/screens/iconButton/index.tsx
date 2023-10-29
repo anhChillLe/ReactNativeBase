@@ -1,10 +1,9 @@
 import {Mail} from 'assets/icons'
 import {IconButton, Row, Screen} from 'components'
 import {ButtonMode, ButtonSize, ButtonVariant} from 'components/types'
-import {ScrollView} from 'react-native'
 
-const variants: ButtonVariant[] = ['primary', 'secondary', 'error', 'normal']
-const modes: ButtonMode[] = ['filled', 'outlined', 'empty']
+const variants: ButtonVariant[] = ['primary', 'secondary', 'tertiary', 'error', 'normal']
+const modes: ButtonMode[] = ['filled', 'filled-total', 'outlined', 'empty']
 const sizes: ButtonSize[] = ['small', 'medium', 'large']
 
 const IconButtonScreen = () => {
@@ -18,20 +17,13 @@ const IconButtonScreen = () => {
         paddingHorizontal: 8,
       }}>
       <Row style={{flexWrap: 'wrap', gap: 16, alignItems: 'flex-end', justifyContent: 'center'}}>
-        {modes.map(mode => {
-          return variants.map(variant => {
-            return sizes.map(size => {
-              return (
-                <IconButton
-                  key={variant + mode + size}
-                  Icon={Mail}
-                  {...{variant, mode, size}}
-                  style={{flexGrow: 1}}
-                />
-              )
-            })
-          })
-        })}
+        {modes.map(mode => (
+          <Row key={mode} style={{gap: 8}}>
+            {variants.map(variant => (
+              <IconButton key={variant} Icon={Mail} {...{variant, mode}} size="medium" />
+            ))}
+          </Row>
+        ))}
       </Row>
     </Screen>
   )
