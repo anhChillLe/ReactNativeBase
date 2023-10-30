@@ -33,7 +33,7 @@ const RadioButton: FC<RadioButtonProps> = ({
   return (
     <Pressable
       style={containerStyle}
-      onPress={() => onCheckedChange(!checked)}
+      onPress={() => onCheckedChange && onCheckedChange(!checked)}
       {...props}>
         <View style={innerStyle}/>
       </Pressable>

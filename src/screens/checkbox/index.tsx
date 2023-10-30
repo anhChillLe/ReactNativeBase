@@ -1,4 +1,14 @@
-import { Center, CheckBox, RadioButton, Row, Screen, Switch, Text } from 'components'
+import {
+  Center,
+  CheckBox,
+  RadioButton,
+  RadioButtonGroup,
+  RadioButtonItem,
+  Row,
+  Screen,
+  Switch,
+  Text
+} from 'components'
 import { useState } from 'react'
 
 const CheckBoxScreen = () => {
@@ -6,8 +16,11 @@ const CheckBoxScreen = () => {
 
   return (
     <Screen>
+      
       <Center style={{flex: 1, gap: 16}}>
-        <Text variant='headlineMedium' style={{padding: 32}}>{checked ? 'True' : 'False'}</Text>
+        <Text variant="headlineMedium" style={{padding: 32}}>
+          {checked ? 'True' : 'False'}
+        </Text>
         <Row style={{gap: 8, alignItems: 'center'}}>
           <CheckBox checked={checked} onCheckedChange={setChecked} size="small" />
           <CheckBox checked={checked} onCheckedChange={setChecked} size="medium" />
@@ -18,7 +31,14 @@ const CheckBoxScreen = () => {
           <RadioButton checked={checked} onCheckedChange={setChecked} size="medium" />
           <RadioButton checked={checked} onCheckedChange={setChecked} size="large" />
         </Row>
-        <Switch value={checked} onValueChange={setChecked}/>
+        <Switch value={checked} onValueChange={setChecked} />
+
+        <RadioButtonGroup onValueChanged={value => console.log(value)}>
+          <RadioButtonItem title="This is value 1" value='item1' />
+          <RadioButtonItem title="This is value 2" value='item2'  />
+          <RadioButtonItem title="This is value 3" value='item3'  />
+        </RadioButtonGroup>
+
       </Center>
     </Screen>
   )

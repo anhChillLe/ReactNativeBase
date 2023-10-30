@@ -1,5 +1,5 @@
 import Text from 'components/Base/Text'
-import {useAppTheme} from 'components/theme'
+import {revertColor, useAppTheme} from 'components/theme'
 import {ChipProps, TStyle, VStyle} from 'components/types'
 import {FC} from 'react'
 import {StyleSheet, TouchableOpacity} from 'react-native'
@@ -10,19 +10,45 @@ const Chip: FC<ChipProps> = ({mode, Leading, Trailing, style, title, ...props}) 
   const chipStyle: VStyle = {
     paddingStart: Leading ? 8 : 16,
     paddingEnd: Trailing ? 8 : 16,
-
     borderRadius: roundness,
-    backgroundColor: mode == 'filled' ? colors.primaryContainer : colors.surfaceContainer,
-    borderColor: mode == 'filled' ? colors.primaryContainer : colors.outline,
+    backgroundColor: (() => {
+      switch (mode) {
+        case 'filled':
+          return colors.primary
+        case 'filled-total':
+          return colors.primaryContainer
+        case 'outlined':
+          return colors.surfaceContainer
+      }
+    })(),
+    borderColor: (() => {
+      switch (mode) {
+        case 'filled':
+          return colors.primary
+        case 'filled-total':
+          return colors.primaryContainer
+        case 'outlined':
+          return colors.outline
+      }
+    })(),
   }
 
   const titleStyle: TStyle = {
     ...typography['labelSmall'],
-    color: mode == 'filled' ? colors.onPrimaryContainer : colors.onSecondaryContainer,
+    color: (() => {
+      switch (mode) {
+        case 'filled':
+          return colors.onPrimary
+        case 'filled-total':
+          return colors.onPrimaryContainer
+        case 'outlined':
+          return colors.onSurface
+      }
+    })(),
   }
 
   return (
-    <TouchableOpacity style={[chipStyle, staticStyles.container, style]}>
+    <TouchableOpacity style={[chipStyle, staticStyles.container, style]} activeOpacity={0.75} {...props}>
       {Leading && (
         <Leading width={titleStyle.fontSize} height={titleStyle.fontSize} fill={titleStyle.color} />
       )}

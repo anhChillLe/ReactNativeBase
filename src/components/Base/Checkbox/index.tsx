@@ -27,7 +27,7 @@ const CheckBox: FC<CheckBoxProps> = ({
   }
 
   return (
-    <Pressable style={containerStyle} onPress={() => onCheckedChange(!checked)} {...props}>
+    <Pressable style={containerStyle} onPress={() => onCheckedChange && onCheckedChange(!checked)} {...props}>
       {checked && <Icon width="100%" height="100%" fill={colors.onPrimary} />}
     </Pressable>
   )

@@ -18,7 +18,7 @@ import {NumberProp} from 'react-native-svg'
 type VStyle = StyleProp<ViewStyle>
 type TStyle = StyleProp<TextStyle>
 
-type ButtonVariant = 'primary' | 'secondary' | 'tertiary' |'error' | 'normal'
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'error' | 'normal'
 type ButtonMode = 'outlined' | 'filled' | 'filled-total' | 'empty'
 type ButtonSize = 'small' | 'medium' | 'large'
 
@@ -32,7 +32,7 @@ type CheckBoxVariant = 'primary' | 'secondary'
 type CheckBoxSize = 'small' | 'medium' | 'large'
 
 type CardMode = 'filled' | 'outlined'
-type ChipMode = 'filled' | 'outlined'
+type ChipMode = 'filled' | 'filled-total' | 'outlined'
 
 type NotificationVariant = 'success' | 'error' | 'warning' | 'normal'
 
@@ -77,9 +77,9 @@ interface TextProps extends RNTextProps {
   variant?: TextVariant
 }
 
-interface CheckableProps extends ViewProps {
+interface CheckableProps extends PressableProps {
   checked: boolean
-  onCheckedChange: (checked: boolean) => void
+  onCheckedChange?: (checked: boolean) => void
 }
 
 interface CheckBoxProps extends CheckableProps {
