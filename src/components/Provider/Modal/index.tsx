@@ -9,6 +9,7 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { LayoutRectangle } from 'react-native'
 
 interface ModalController {
   push: (content: ContentProps) => void
@@ -18,7 +19,7 @@ interface ModalController {
 }
 const ModalContext = createContext<ModalController | undefined>(undefined)
 interface ContentProps {
-  position?: 'top' | 'bottom' | 'center'
+  position?: 'top' | 'bottom' | 'center' | LayoutRectangle
   transparent?: boolean
   dismissable?: boolean
   timeout?: number

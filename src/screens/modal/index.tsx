@@ -3,6 +3,7 @@ import {Button, Center, ConfirmPopup, LoadingPopup, Screen, usePopup} from 'comp
 
 const ModalControllerScreen = () => {
   const {push, pop} = usePopup()
+  
   const sendConfirm = () => {
     return push({
       position: 'center',
@@ -14,9 +15,7 @@ const ModalControllerScreen = () => {
           message="Please confirm"
           positive={{
             title: 'OK',
-            onPress: () => {
-              pop()
-            },
+            onPress: pop,
           }}
           negative={{
             title: 'Cancel',

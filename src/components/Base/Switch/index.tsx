@@ -62,7 +62,7 @@ const CustomSwitch: FC<SwitchProps> = ({value, onValueChange}) => {
 
   return (
     <Pressable
-      onTouchStart={() => {
+      onPress={() => {
         onValueChange && onValueChange(!value)
       }}>
       <Animated.View style={[styles.container, containerAnimatedStyle]}>

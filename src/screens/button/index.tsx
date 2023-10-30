@@ -17,7 +17,7 @@ const ButtonScreen = () => {
   const [disable, setDisable] = useState(false)
 
   return (
-    <Screen scrollable contentContainerStyle={{paddingHorizontal: 16, gap: 8}}>
+    <Screen scrollable contentContainerStyle={{padding: 16, gap: 8}}>
       <Center style={{padding: 32}}>
         <Button
           Icon={showIcon ? Mail : undefined}

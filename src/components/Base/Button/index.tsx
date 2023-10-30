@@ -1,10 +1,10 @@
 import Text from 'components/Base/Text'
 import {revertColor, useAppTheme, useMemoStyle} from 'components/theme'
 import {ButtonProps, ButtonSize, ButtonVariant} from 'components/types'
-import {FC, ReactElement, useMemo} from 'react'
+import {FC, ForwardRefRenderFunction, ReactElement, forwardRef, useMemo} from 'react'
 import {ActivityIndicator, Platform, StyleSheet, TouchableOpacity} from 'react-native'
 
-const Button: FC<ButtonProps> = ({
+const Button: ForwardRefRenderFunction<TouchableOpacity, ButtonProps> = ({
   title,
   mode = 'filled',
   variant = 'primary',
@@ -15,7 +15,7 @@ const Button: FC<ButtonProps> = ({
   theme: overideTheme,
   style,
   ...props
-}): ReactElement => {
+}, ref): ReactElement => {
   const {colors, roundness} = useAppTheme(overideTheme)
 
   const sizeMap: Record<ButtonSize, Sizes> = useMemo(() => {
@@ -68,7 +68,7 @@ const Button: FC<ButtonProps> = ({
   const titleStyle = StyleSheet.flatten([styles.title, buttonStyles.title, textStyle])
 
   return (
-    <TouchableOpacity style={containerStyle} activeOpacity={0.6} {...props}>
+    <TouchableOpacity style={containerStyle} activeOpacity={0.6} {...props} ref={ref}>
       {loading && (
         <ButtonLoadingIndicator size={size} sizeMap={sizeMap} color={styles.title.color} />
       )}
@@ -214,4 +214,4 @@ const textButtonStyles = (variant: ButtonVariant, colors: ColorScheme) => {
   })
 }
 
-export default Button
+export default forwardRef(Button)

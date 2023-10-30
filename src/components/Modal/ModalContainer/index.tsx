@@ -1,19 +1,20 @@
 import { useAppTheme } from 'components/theme'
 import { FC, useEffect } from 'react'
 import {
+  LayoutRectangle,
   Modal,
   ModalProps,
   Pressable,
   StyleProp,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
 } from 'react-native'
 import Animated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated'
 
 interface ModalBackdropProps extends ModalProps {
   duration?: number
   opacity?: number
-  position?: 'top' | 'bottom' | 'center'
+  position?: 'top' | 'bottom' | 'center' | LayoutRectangle
   containerstyle?: StyleProp<ViewStyle>
   dismissable?: boolean
 }
@@ -31,22 +32,27 @@ const ModalContainer: FC<ModalBackdropProps> = ({
   const opacity = useSharedValue(0)
 
   useEffect(() => {
-    if(visible){
+    if (visible) {
       opacity.value = withTiming(maxOpacity, {
         easing: Easing.ease,
-        duration: 100
+        duration: 100,
       })
-    }else{
-      opacity.value = withTiming(0, {
-        easing: Easing.ease,
-        duration: 100
-      }, (finished) => {
-        if(finished){
-          // runOnJS()
-        }
-      })
+    } else {
+      opacity.value = withTiming(
+        0,
+        {
+          easing: Easing.ease,
+          duration: 100,
+        },
+        finished => {
+          if (finished) {
+          }
+        },
+      )
     }
   }, [visible])
+
+  const justify = typeof position != 'object' ? positionMap[position] : undefined
 
   return (
     <Modal
@@ -55,11 +61,18 @@ const ModalContainer: FC<ModalBackdropProps> = ({
       animationType="none"
       onRequestClose={dismissable ? onRequestClose : undefined}
       {...props}>
-      <Animated.View
-        style={[styles.backdrop, {opacity, backgroundColor: colors.scrim}]}
-      />
+      {maxOpacity != 0 && (
+        <Animated.View
+          style={[styles.backdrop, {opacity, backgroundColor: colors.scrim}]}
+        />
+      )}
       <Pressable
-        style={[styles.backdropTouch, {justifyContent: positionMap[position]}]}
+        style={[
+          styles.backdropTouch,
+          {
+            justifyContent: justify,
+          },
+        ]}
         onPress={onRequestClose}
         disabled={!dismissable}>
         {children}

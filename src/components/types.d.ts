@@ -1,8 +1,9 @@
 import {Icon} from 'assets/icons'
 import {AppTheme, FontVariant} from 'components/theme'
-import {ReactElement} from 'react'
+import {ReactElement, ReactNode} from 'react'
 import {
   GestureResponderEvent,
+  LayoutChangeEvent,
   PressableProps,
   TextProps as RNTextProps,
   StyleProp,
@@ -131,4 +132,17 @@ interface ConfirmPopupProps extends ViewProps {
 
 interface PopupNotificationProps extends ViewProps {
   variant?: NotificationVariant
+}
+
+interface MenuProps {
+  children?: ReactElement
+  Anchor: (props: {onRequestOpen: () => void;}) => ReactElement
+  dismissable?: boolean
+}
+
+
+interface MenuItemProps extends Omit<TouchableOpacityProps, 'children'> {
+  Leading?: Icon
+  Trailing?: Icon
+  title: string
 }

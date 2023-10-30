@@ -1,7 +1,7 @@
-import {createDrawerNavigator} from '@react-navigation/drawer'
-import {Bell, Mail, Menu} from 'assets/icons'
-import {IconButton, Row} from 'components'
-import {DrawerLayout} from 'navigations/main_drawer/drawer'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+import { Bell, Mail, Menu as MenuDrawer, MoreVert } from 'assets/icons'
+import { Column, Divider, IconButton, MenuItem, PositionPopup, Row } from 'components'
+import { DrawerLayout } from 'navigations/main_drawer/drawer'
 import ButtonScreen from 'screens/button'
 import CardScreen from 'screens/card'
 import CheckBoxScreen from 'screens/checkbox'
@@ -19,9 +19,10 @@ const MainDrawer = () => {
     <Drawer.Navigator
       initialRouteName="modal"
       screenOptions={({navigation}) => ({
+        headerTitleAlign: 'left',
         headerLeft: () => (
           <IconButton
-            Icon={Menu}
+            Icon={MenuDrawer}
             size="medium"
             mode="empty"
             variant="normal"
@@ -32,6 +33,23 @@ const MainDrawer = () => {
           <Row>
             <IconButton Icon={Mail} size="medium" mode="empty" variant="normal" />
             <IconButton Icon={Bell} size="medium" mode="empty" variant="normal" />
+            <PositionPopup
+              dismissable
+              Anchor={({onRequestOpen}) => (
+                <IconButton
+                  onPress={onRequestOpen}
+                  Icon={MoreVert}
+                  size="medium"
+                  mode="empty"
+                  variant="normal"
+                />
+              )}>
+              <Column>
+                <MenuItem title='Change password' Leading={Mail} Trailing={Bell}/>
+                <Divider />
+                <MenuItem title='Logout' Leading={Mail} Trailing={Bell}/>
+              </Column>
+            </PositionPopup>
           </Row>
         ),
       })}
