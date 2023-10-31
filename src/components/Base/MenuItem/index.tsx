@@ -8,7 +8,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 const MenuItem: FC<MenuItemProps> = ({Leading, Trailing, title}) => {
   const {colors} = useAppTheme()
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} activeOpacity={0.75}>
       {Leading && <Leading width={18} height={18} fill={colors.onSurfaceVariant}/>}
       <Text style={{color: colors.onSurface}} numberOfLines={1} ellipsizeMode='tail'>{title}</Text>
       <Fill />
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 16,
     alignItems: 'center',
-    minWidth: 192,
   },
 })
 

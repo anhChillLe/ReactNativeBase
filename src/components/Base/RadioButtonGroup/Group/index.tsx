@@ -8,11 +8,11 @@ export const RadioButtonGroupContext = createContext<{value?: string; setValue: 
 })
 
 interface Props extends ViewProps {
-  defaultKey?: string
+  defaultVaulue?: string
   onValueChanged?: (value: string) => void
 }
-const RadioButtonGroup: FC<Props> = ({children, defaultKey, onValueChanged, style,...props}) => {
-  const [value, setValue] = useState(defaultKey)
+const RadioButtonGroup: FC<Props> = ({children, defaultVaulue, onValueChanged, style,...props}) => {
+  const [value, setValue] = useState(defaultVaulue)
 
   useEffect(() => {
     onValueChanged && value && onValueChanged(value)

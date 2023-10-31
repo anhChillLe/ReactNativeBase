@@ -1,6 +1,6 @@
 import {Icon} from 'assets/icons'
 import {AppTheme, FontVariant} from 'components/theme'
-import {ReactElement, ReactNode} from 'react'
+import {FC, ReactElement, ReactNode} from 'react'
 import {
   GestureResponderEvent,
   LayoutChangeEvent,
@@ -134,12 +134,13 @@ interface PopupNotificationProps extends ViewProps {
   variant?: NotificationVariant
 }
 
-interface MenuProps {
+interface MenuProps extends ViewProps{
   children?: ReactElement
-  Anchor: (props: {onRequestOpen: () => void;}) => ReactElement
+  anchor: ReactElement
   dismissable?: boolean
+  side?: 'left' | 'right' | 'center' | 'auto'
+  mode?: 'flat' | 'shadow' | 'border'
 }
-
 
 interface MenuItemProps extends Omit<TouchableOpacityProps, 'children'> {
   Leading?: Icon

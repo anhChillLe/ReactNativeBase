@@ -1,6 +1,8 @@
-import { useAppTheme } from 'components/theme'
-import { FC, useEffect } from 'react'
+import {useAppTheme} from 'components/theme'
+import {VStyle} from 'components/types'
+import {FC, useEffect} from 'react'
 import {
+  Dimensions,
   LayoutRectangle,
   Modal,
   ModalProps,
@@ -9,7 +11,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native'
-import Animated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated'
+import Animated, {Easing, useSharedValue, withTiming} from 'react-native-reanimated'
 
 interface ModalBackdropProps extends ModalProps {
   duration?: number
@@ -30,6 +32,7 @@ const ModalContainer: FC<ModalBackdropProps> = ({
 }) => {
   const {colors} = useAppTheme()
   const opacity = useSharedValue(0)
+  const {width} = Dimensions.get('window')
 
   useEffect(() => {
     if (visible) {
@@ -52,7 +55,14 @@ const ModalContainer: FC<ModalBackdropProps> = ({
     }
   }, [visible])
 
-  const justify = typeof position != 'object' ? positionMap[position] : undefined
+  const justify: VStyle =
+    typeof position != 'object'
+      ? {justifyContent: positionMap[position]}
+      : {
+        position: 'absolute',
+        top: position.y + position.height + 8,
+        right: Math.max(width - (position.x + position.width), 8),
+      }
 
   return (
     <Modal
@@ -62,17 +72,10 @@ const ModalContainer: FC<ModalBackdropProps> = ({
       onRequestClose={dismissable ? onRequestClose : undefined}
       {...props}>
       {maxOpacity != 0 && (
-        <Animated.View
-          style={[styles.backdrop, {opacity, backgroundColor: colors.scrim}]}
-        />
+        <Animated.View style={[styles.backdrop, {opacity, backgroundColor: colors.scrim}]} />
       )}
       <Pressable
-        style={[
-          styles.backdropTouch,
-          {
-            justifyContent: justify,
-          },
-        ]}
+        style={[styles.backdropTouch, justify]}
         onPress={onRequestClose}
         disabled={!dismissable}>
         {children}

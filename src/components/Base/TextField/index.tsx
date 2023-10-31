@@ -1,10 +1,10 @@
-import {useAppTheme} from 'components/theme'
-import {TStyle, TextFieldProps, TextFieldSize, TextFieldVariant, VStyle} from 'components/types'
-import React, {FC, useState} from 'react'
-import {Platform, StyleSheet, TextInput} from 'react-native'
+import { useAppTheme } from 'components/theme'
+import { TextFieldProps, TextFieldSize, TextFieldVariant, VStyle } from 'components/types'
+import React, { ForwardRefRenderFunction, forwardRef, useState } from 'react'
+import { Platform, StyleSheet, TextInput } from 'react-native'
 import Animated from 'react-native-reanimated'
 
-const TextField: FC<TextFieldProps> = ({
+const TextField: ForwardRefRenderFunction<TextInput, TextFieldProps> = ({
   size = 'medium',
   mode = 'outlined',
   variant = 'primary',
@@ -15,7 +15,7 @@ const TextField: FC<TextFieldProps> = ({
   theme: overideTheme,
   style,
   ...props
-}) => {
+}, ref) => {
   const theme = useAppTheme(overideTheme)
   const [isFocused, setFocused] = useState(false)
   const focus = () => setFocused(true)
@@ -64,6 +64,7 @@ const TextField: FC<TextFieldProps> = ({
           theme.typography[fontMap[size]],
           {lineHeight: undefined, textAlignVertical: 'center'},
         ]}
+        ref={ref}
         onFocus={focus}
         onBlur={blur}
         blurOnSubmit
@@ -170,4 +171,4 @@ const underlinedStyles = (
   })
 }
 
-export default TextField
+export default forwardRef(TextField)

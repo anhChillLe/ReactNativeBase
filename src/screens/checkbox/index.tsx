@@ -26,6 +26,7 @@ const CheckBoxScreen = () => {
           <CheckBox checked={checked} onCheckedChange={setChecked} size="medium" />
           <CheckBox checked={checked} onCheckedChange={setChecked} size="large" />
         </Row>
+
         <Row style={{gap: 8, alignItems: 'center'}}>
           <RadioButton checked={checked} onCheckedChange={setChecked} size="small" />
           <RadioButton checked={checked} onCheckedChange={setChecked} size="medium" />
@@ -33,7 +34,7 @@ const CheckBoxScreen = () => {
         </Row>
         <Switch value={checked} onValueChange={setChecked} />
 
-        <RadioButtonGroup onValueChanged={value => console.log(value)}>
+        <RadioButtonGroup onValueChanged={value => console.log(value)} defaultVaulue='item2'> 
           <RadioButtonItem title="This is value 1" value='item1' />
           <RadioButtonItem title="This is value 2" value='item2'  />
           <RadioButtonItem title="This is value 3" value='item3'  />

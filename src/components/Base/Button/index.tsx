@@ -1,8 +1,8 @@
 import Text from 'components/Base/Text'
-import {revertColor, useAppTheme, useMemoStyle} from 'components/theme'
-import {ButtonProps, ButtonSize, ButtonVariant} from 'components/types'
-import {FC, ForwardRefRenderFunction, ReactElement, forwardRef, useMemo} from 'react'
-import {ActivityIndicator, Platform, StyleSheet, TouchableOpacity} from 'react-native'
+import { revertColor, useAppTheme } from 'components/theme'
+import { ButtonProps, ButtonSize, ButtonVariant } from 'components/types'
+import { ForwardRefRenderFunction, ReactElement, forwardRef, useMemo } from 'react'
+import { ActivityIndicator, Platform, StyleSheet, TouchableOpacity } from 'react-native'
 
 const Button: ForwardRefRenderFunction<TouchableOpacity, ButtonProps> = ({
   title,
@@ -73,7 +73,7 @@ const Button: ForwardRefRenderFunction<TouchableOpacity, ButtonProps> = ({
         <ButtonLoadingIndicator size={size} sizeMap={sizeMap} color={styles.title.color} />
       )}
       {Icon && !loading && (
-        <Icon fill={styles.title.color} width={sizeMap[size].icon} height={sizeMap[size].icon} />
+        <Icon fill={styles.title.color} width={sizeMap[size].icon} height={sizeMap[size].icon}/>
       )}
       <Text variant={fontMap[size]} style={titleStyle}>
         {title}
