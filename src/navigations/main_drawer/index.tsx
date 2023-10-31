@@ -1,6 +1,13 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Bell, Mail, Menu as MenuDrawer, MoreVert } from 'assets/icons'
-import { Column, Divider, IconButton, MenuItem, PosisionModalLayout, Row, usePopup } from 'components'
+import {
+  Column,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Row
+} from 'components'
 import { useAppTheme } from 'components/theme'
 import { DrawerLayout } from 'navigations/main_drawer/drawer'
 import ButtonScreen from 'screens/button'
@@ -16,18 +23,7 @@ import ThemePickerScreen from 'screens/theme'
 const Drawer = createDrawerNavigator()
 
 const MainDrawer = () => {
-  const {push, pop} = usePopup()
   const {colors, roundness} = useAppTheme()
-
-  const Menu = () => {
-    return (
-      <Column style={{backgroundColor: colors.surfaceContainer, borderRadius: roundness}}>
-        <MenuItem title="Change password" Leading={Mail} Trailing={Bell} />
-        <Divider />
-        <MenuItem title="Logout" Leading={Mail} Trailing={Bell} />
-      </Column>
-    )
-  }
 
   return (
     <Drawer.Navigator
@@ -47,26 +43,14 @@ const MainDrawer = () => {
           <Row>
             <IconButton Icon={Mail} size="medium" mode="empty" variant="normal" />
             <IconButton Icon={Bell} size="medium" mode="empty" variant="normal" />
-            <IconButton
-              Icon={MoreVert}
-              size="medium"
-              mode="empty"
-              variant="normal"
-              onPress={event => {
-                const {pageX, pageY, locationX, locationY} = event.nativeEvent
-                const x = pageX - locationX
-                const y = pageY - locationY
-                push({
-                  dismissable: true,
-                  transparent: true,
-                  element: (
-                    <PosisionModalLayout anchorLayout={{x, y, width: 0, height: 0}}>
-                      <Menu />
-                    </PosisionModalLayout>
-                  )
-                })
-              }}
-            />
+            <Menu
+              anchor={<IconButton Icon={MoreVert} size="medium" mode="empty" variant="normal" />}>
+              <Column style={{backgroundColor: colors.surfaceContainer, borderRadius: roundness}}>
+                <MenuItem title="Change password" Leading={Mail} Trailing={Bell} />
+                <Divider />
+                <MenuItem title="Logout" Leading={Mail} Trailing={Bell} />
+              </Column>
+            </Menu>
           </Row>
         ),
       })}

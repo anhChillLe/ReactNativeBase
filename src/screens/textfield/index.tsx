@@ -1,27 +1,15 @@
 import {Mail} from 'assets/icons'
-import {
-  Card,
-  Center,
-  Column,
-  Fill,
-  KeyboardDismiss,
-  Screen,
-  Switch,
-  Text,
-  TextField,
-} from 'components'
+import {Card, Center, Column, Fill, Screen, Switch, Text, TextField} from 'components'
 import Button from 'components/Base/Button'
 import Row from 'components/Layout/Row'
-import {TextFieldMode, TextFieldSize, TextFieldVariant} from 'components/types'
+import {TextFieldMode, TextFieldVariant} from 'components/types'
 import {useState} from 'react'
-import {StyleSheet} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 
-const variants: TextFieldVariant[] = ['primary', 'secondary', 'error']
+const variants: TextFieldVariant[] = ['primary', 'error']
 const modes: TextFieldMode[] = ['filled', 'outlined', 'underlined']
-const sizes: TextFieldSize[] = ['small', 'medium', 'large']
 
 const TextFieldScreen = () => {
-  const [size, setSize] = useState<TextFieldSize>('small')
   const [mode, setMode] = useState<TextFieldMode>('filled')
   const [variant, setVariant] = useState<TextFieldVariant>('primary')
   const [showLeadingIcon, setShowLeadingIcon] = useState(false)
@@ -30,18 +18,15 @@ const TextFieldScreen = () => {
   const [disable, setDisable] = useState(false)
 
   return (
-    <Screen scrollable contentContainerStyle={{padding: 16, flexGrow: 1, gap: 16}}>
-      <KeyboardDismiss>
-        <Center style={{height: 128, alignItems: 'stretch', gap: 16}}>
-          <TextField
-            Leading={showLeadingIcon ? Mail : undefined}
-            Trailing={showTrailingIcon ? Mail : undefined}
-            {...{size, mode, variant}}
-            multiline={multiline}
-            placeholder="Text field placeholder"
-          />
-        </Center>
-      </KeyboardDismiss>
+    <Screen scrollable contentContainerStyle={{padding: 16, gap: 16}}>
+      <Center style={{height: 128, alignItems: 'stretch', gap: 16}}>
+        <TextField
+          Leading={showLeadingIcon ? Mail : undefined}
+          Trailing={showTrailingIcon ? Mail : undefined}
+          {...{mode, variant}}
+          placeholder="Text field placeholder"
+        />
+      </Center>
       <Row style={{alignItems: 'center', gap: 8}}>
         {variants.map(vr => {
           return (
@@ -64,19 +49,6 @@ const TextFieldScreen = () => {
               variant={mode == md ? 'primary' : 'normal'}
               title={md}
               onPress={() => setMode(md)}
-            />
-          )
-        })}
-      </Row>
-      <Row style={{alignItems: 'center', gap: 8}}>
-        {sizes.map(si => {
-          return (
-            <Button
-              key={si}
-              mode="outlined"
-              variant={size == si ? 'primary' : 'normal'}
-              title={si}
-              onPress={() => setSize(si)}
             />
           )
         })}
@@ -104,6 +76,15 @@ const TextFieldScreen = () => {
           <Switch value={multiline} onValueChange={setMultiline} />
         </Card>
       </Column>
+
+      <Center style={{height: 128, alignItems: 'stretch', gap: 16}}>
+        <TextField
+          Leading={showLeadingIcon ? Mail : undefined}
+          Trailing={showTrailingIcon ? Mail : undefined}
+          {...{mode, variant}}
+          placeholder="Text field placeholder"
+        />
+      </Center>
     </Screen>
   )
 }

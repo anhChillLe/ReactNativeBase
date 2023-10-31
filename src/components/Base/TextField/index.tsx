@@ -1,45 +1,36 @@
-import { useAppTheme } from 'components/theme'
-import { TextFieldProps, TextFieldSize, TextFieldVariant, VStyle } from 'components/types'
-import React, { ForwardRefRenderFunction, forwardRef, useState } from 'react'
-import { Platform, StyleSheet, TextInput } from 'react-native'
-import Animated from 'react-native-reanimated'
+import {useAppTheme} from 'components/theme'
+import {TextFieldProps, TextFieldVariant} from 'components/types'
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
+import {Pressable, StyleSheet, TextInput} from 'react-native'
 
-const TextField: ForwardRefRenderFunction<TextInput, TextFieldProps> = ({
-  size = 'medium',
-  mode = 'outlined',
-  variant = 'primary',
-  onLeadingPress,
-  onTrailingPress,
-  Leading,
-  Trailing,
-  theme: overideTheme,
-  style,
-  ...props
-}, ref) => {
+const TextField: ForwardRefRenderFunction<Partial<TextInput>, TextFieldProps> = (
+  {
+    mode = 'outlined',
+    variant = 'primary',
+    onLeadingPress,
+    onTrailingPress,
+    Leading,
+    Trailing,
+    theme: overideTheme,
+    style,
+    ...props
+  },
+  ref,
+) => {
   const theme = useAppTheme(overideTheme)
   const [isFocused, setFocused] = useState(false)
-  const focus = () => setFocused(true)
-  const blur = () => setFocused(false)
-
-  const fontMap: Record<TextFieldSize, keyof Typography> = {
-    small: 'bodySmall',
-    medium: 'bodyMedium',
-    large: 'bodyLarge',
+  const input = useRef<TextInput>(null)
+  const focus = () => {
+    input.current?.focus()
   }
-
-  const sizeMap = getSizeMap()
-  const icSize = theme.typography[fontMap[size]].fontSize
-  const containerSize = sizeMap[size].container
-
-  const containerStyle: VStyle = {
-    paddingHorizontal: containerSize,
-    paddingVertical: Platform.select({
-      ios: containerSize, 
-      android:0
-    }),
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: containerSize / 2,
+  const blur = () => {
+    input.current?.blur()
   }
 
   const styles = (() => {
@@ -53,59 +44,48 @@ const TextField: ForwardRefRenderFunction<TextInput, TextFieldProps> = ({
     }
   })()
 
+  useImperativeHandle(ref, () => ({
+    ...input.current,
+  }))
+
   return (
-    <Animated.View style={[containerStyle, styles.container]}>
+    <Pressable style={[staticStyles.container, styles.container]} onPress={focus}>
       {Leading && (
-        <Leading width={icSize} height={icSize} onPress={onLeadingPress} fill={styles.icon.color} />
+        <Leading width={18} height={18} onPress={onLeadingPress} fill={styles.icon.color} />
       )}
       <TextInput
-        style={[
-          {flex: 1},
-          theme.typography[fontMap[size]],
-          {lineHeight: undefined, textAlignVertical: 'center'},
-        ]}
-        ref={ref}
-        onFocus={focus}
-        onBlur={blur}
+        style={[theme.typography['bodyMedium'], styles.input, staticStyles.input]}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         blurOnSubmit
         cursorColor={theme.colors[variant]}
         selectionColor={theme.colors[variant]}
         placeholderTextColor={styles.input.color + Math.floor(0.25 * 255)}
+        ref={input}
         {...props}
       />
       {Trailing && (
-        <Trailing
-          width={icSize}
-          height={icSize}
-          onPress={onTrailingPress}
-          fill={styles.icon.color}
-        />
+        <Trailing width={18} height={18} onPress={onTrailingPress} fill={styles.icon.color} />
       )}
-    </Animated.View>
+    </Pressable>
   )
 }
 
-type Sizes = {
-  container: number
-  icon: number
-}
-const getSizeMap = () => {
-  const map: Record<TextFieldSize, Sizes> = {
-    small: {
-      container: 12,
-      icon: 12,
-    },
-    medium: {
-      container: 16,
-      icon: 16,
-    },
-    large: {
-      container: 18,
-      icon: 18,
-    },
-  }
-  return map
-}
+const staticStyles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  input: {
+    flex: 1,
+    lineHeight: undefined,
+    textAlignVertical: 'center',
+    paddingVertical: 0,
+    height: 56,
+  },
+})
 
 const filledStyles = (
   {colors, roundness}: AppTheme,

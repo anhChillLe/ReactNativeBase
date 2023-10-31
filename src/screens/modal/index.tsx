@@ -1,4 +1,4 @@
-import {Bell, Mail} from 'assets/icons'
+import { Bell, Mail } from 'assets/icons'
 import {
   Button,
   Center,
@@ -14,14 +14,15 @@ import {
   Screen,
   usePopup,
 } from 'components'
-import {useAppTheme} from 'components/theme'
-import {useRef, useState} from 'react'
-import {GestureResponderEvent, TouchableOpacity} from 'react-native'
+import { useAppTheme } from 'components/theme'
+import { useRef, useState } from 'react'
+import { Platform, TouchableOpacity } from 'react-native'
 
 const ModalControllerScreen = () => {
   const {push, pop} = usePopup()
   const [option, setOption] = useState<string>()
   const {colors, roundness} = useAppTheme()
+  
   const selectionRef = useRef<TouchableOpacity>(null)
   const leftRef = useRef<TouchableOpacity>(null)
   const rightRef = useRef<TouchableOpacity>(null)
@@ -107,7 +108,7 @@ const ModalControllerScreen = () => {
         dismissable: true,
         transparent: true,
         element: (
-          <PosisionModalLayout anchorLayout={{x, y, width, height}} anchorRef={leftRef}>
+          <PosisionModalLayout anchorLayout={{x, y, width, height}}>
             <Column style={{backgroundColor: colors.surfaceContainer, borderRadius: roundness}}>
               <MenuItem title="Left menu" Leading={Mail} Trailing={Bell} />
               <Divider />
@@ -122,6 +123,13 @@ const ModalControllerScreen = () => {
   return (
     <Screen>
       <Center style={{flex: 1, gap: 16}}>
+        <Button
+          title="Test"
+          onPress={e => {
+            console.log(Platform.OS, e.target)
+          }}
+        />
+
         <Row style={{gap: 64}}>
           <Button
             ref={leftRef}
@@ -143,7 +151,7 @@ const ModalControllerScreen = () => {
         </Row>
 
         <Button title="Confirm popup" onPress={sendConfirm} />
-        
+
         <Button title="Loading popup" onPress={sendLoading} />
 
         <Button

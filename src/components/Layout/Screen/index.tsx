@@ -9,7 +9,6 @@ const Screen: FC<ScreenProps> = ({
   dismissKeyboard,
   scrollable,
   children,
-  contentContainerStyle,
   statusBarstyle,
   ...props
 }) => {
@@ -28,9 +27,8 @@ const Screen: FC<ScreenProps> = ({
       {appBar}
       <Container
         style={[styles.container, style]}
-        {...props}
-        contentContainerStyle={[{flexGrow: 1}, contentContainerStyle]}
-        automaticallyAdjustKeyboardInsets>
+        automaticallyAdjustKeyboardInsets
+        {...props}>
         {children}
       </Container>
     </SafeAreaView>

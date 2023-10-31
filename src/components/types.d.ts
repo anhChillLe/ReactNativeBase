@@ -24,8 +24,7 @@ type ButtonMode = 'outlined' | 'filled' | 'filled-total' | 'empty'
 type ButtonSize = 'small' | 'medium' | 'large'
 
 type TextFieldMode = 'underlined' | 'outlined' | 'filled'
-type TextFieldSize = 'small' | 'medium' | 'large'
-type TextFieldVariant = 'primary' | 'secondary' | 'error'
+type TextFieldVariant = 'primary' | 'error'
 
 type TextVariant = keyof Typography
 
@@ -56,12 +55,11 @@ interface IconButtonProps extends ButtonBaseProps {
   badge?: number
 }
 
-interface TextFieldProps extends TextInputProps {
+interface TextFieldProps extends Omit<TextInputProps, 'ref'> {
   Leading?: Icon
   onLeadingPress?: (e: GestureResponderEvent) => void
   Trailing?: Icon
   onTrailingPress?: (e: GestureResponderEvent) => void
-  size?: TextFieldSize
   variant?: TextFieldVariant
   mode?: TextFieldMode
   theme?: AppTheme
