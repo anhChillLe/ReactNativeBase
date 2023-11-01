@@ -11,19 +11,28 @@ export function useStack<T>(initialStack: T[]) {
     setStack(stack => stack.slice(0, -1))
   }
 
-  const popToTop = () => {
+  const popAll = () => {
     setStack(stack => [])
   }
 
-  const replace = (content: T) => {
+  const replaceAll = (content: T) => {
     setStack(stack => [content])
+  }
+
+  const replace = (content: T) => {
+    setStack(stack => {
+      const newStack = [...stack]
+      newStack[newStack.length - 1] = content
+      return newStack
+    })
   }
 
   return {
     stack,
     push,
     pop,
-    popToTop,
+    popAll,
     replace,
+    replaceAll
   }
 }

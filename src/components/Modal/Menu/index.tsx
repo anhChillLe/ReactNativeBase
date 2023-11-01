@@ -1,5 +1,5 @@
 import {PosisionModalLayout} from 'components'
-import {usePopup} from 'components/Provider/Modal'
+import {useModal} from 'components/Provider/Modal'
 import {FC, ReactElement, useRef} from 'react'
 import {Pressable, StyleSheet, View} from 'react-native'
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Menu: FC<Props> = ({children, anchor}) => {
-  const {push} = usePopup()
+  const {push} = useModal()
   const ref = useRef<View>(null)
 
   const openMenu = () => {

@@ -9,17 +9,18 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { LayoutRectangle } from 'react-native'
 
 interface ModalController {
   push: (content: ContentProps) => void
   pop: () => void
   popToTop: () => void
   replace: (content: ContentProps) => void
+  replaceCurrent: (content: ContentProps) => void
 }
 const ModalContext = createContext<ModalController | undefined>(undefined)
+
 interface ContentProps {
-  position?: 'top' | 'bottom' | 'center' | LayoutRectangle
+  position?: 'top' | 'bottom' | 'center'
   transparent?: boolean
   dismissable?: boolean
   timeout?: number
@@ -28,12 +29,12 @@ interface ContentProps {
 
 const ModalProvider: FC<PropsWithChildren> = ({children}) => {
   const [visible, setVisible] = useState(false)
-  const {stack: contentStack, push, replace, pop, popToTop} = useStack<ContentProps>([])
-  const content = contentStack[contentStack.length - 1]
+  const {stack, push, replace, pop, popAll: popToTop, replaceAll: replaceCurrent} = useStack<ContentProps>([])
+  const content = stack[stack.length - 1]
 
   useEffect(() => {
-    setVisible(contentStack.length > 0)
-    if(content?.timeout){
+    setVisible(stack.length > 0)
+    if (content?.timeout) {
       setTimeout(() => {
         pop()
       }, content.timeout)
@@ -41,7 +42,7 @@ const ModalProvider: FC<PropsWithChildren> = ({children}) => {
   }, [content])
 
   return (
-    <ModalContext.Provider value={{pop, popToTop, push, replace}}>
+    <ModalContext.Provider value={{pop, popToTop, push, replace, replaceCurrent}}>
       <ModalContainer
         visible={visible}
         onRequestClose={popToTop}
@@ -55,10 +56,10 @@ const ModalProvider: FC<PropsWithChildren> = ({children}) => {
   )
 }
 
-export const usePopup = (): ModalController => {
+export const useModal = (): ModalController => {
   const controller = useContext(ModalContext)
   if (controller == undefined) {
-    throw new Error('usePopup must be used within a ModalProvider')
+    throw new Error('useModal must be used within a ModalProvider')
   }
   return controller
 }

@@ -1,23 +1,14 @@
-import {useAppTheme} from 'components/theme'
-import {VStyle} from 'components/types'
-import {FC, useEffect} from 'react'
-import {
-  Dimensions,
-  LayoutRectangle,
-  Modal,
-  ModalProps,
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  ViewStyle,
-} from 'react-native'
-import Animated, {Easing, useSharedValue, withTiming} from 'react-native-reanimated'
+import { useAppTheme } from 'components/theme'
+import { VStyle } from 'components/types'
+import { FC, useEffect } from 'react'
+import { Modal, ModalProps, Pressable, StyleSheet } from 'react-native'
+import Animated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated'
 
 interface ModalBackdropProps extends ModalProps {
   duration?: number
   opacity?: number
-  position?: 'top' | 'bottom' | 'center' | LayoutRectangle
-  containerstyle?: StyleProp<ViewStyle>
+  position?: 'top' | 'bottom' | 'center'
+  containerstyle?: VStyle
   dismissable?: boolean
 }
 const ModalContainer: FC<ModalBackdropProps> = ({
@@ -27,12 +18,30 @@ const ModalContainer: FC<ModalBackdropProps> = ({
   onRequestClose,
   position = 'center',
   dismissable,
-  opacity: maxOpacity = 0.25,
+  opacity = 0.25,
   ...props
 }) => {
+  return (
+    <Modal
+      visible={visible}
+      transparent
+      animationType="none"
+      onRequestClose={dismissable ? onRequestClose : undefined}
+      {...props}>
+      {opacity > 0 && <ModalBackdrop visible={visible} opacity={opacity}/>}
+      <Pressable
+        style={[styles.backdropTouch, {justifyContent: positionMap[position]}]}
+        onPress={onRequestClose}
+        disabled={!dismissable}>
+        {children}
+      </Pressable>
+    </Modal>
+  )
+}
+
+const ModalBackdrop = ({visible, opacity : maxOpacity}: {visible?: boolean; opacity: number}) => {
   const {colors} = useAppTheme()
   const opacity = useSharedValue(0)
-  const {width} = Dimensions.get('window')
 
   useEffect(() => {
     if (visible) {
@@ -55,33 +64,7 @@ const ModalContainer: FC<ModalBackdropProps> = ({
     }
   }, [visible])
 
-  const justify: VStyle =
-    typeof position != 'object'
-      ? {justifyContent: positionMap[position]}
-      : {
-        position: 'absolute',
-        top: position.y + position.height + 8,
-        right: Math.max(width - (position.x + position.width), 8),
-      }
-
-  return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="none"
-      onRequestClose={dismissable ? onRequestClose : undefined}
-      {...props}>
-      {maxOpacity != 0 && (
-        <Animated.View style={[styles.backdrop, {opacity, backgroundColor: colors.scrim}]} />
-      )}
-      <Pressable
-        style={[styles.backdropTouch, justify]}
-        onPress={onRequestClose}
-        disabled={!dismissable}>
-        {children}
-      </Pressable>
-    </Modal>
-  )
+  return <Animated.View style={[styles.backdrop, {opacity, backgroundColor: colors.scrim}]} />
 }
 
 const positionMap = {

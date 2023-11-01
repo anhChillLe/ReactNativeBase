@@ -1,14 +1,14 @@
-import { VStyle } from 'components/types'
-import { ReactNode } from 'react'
-import { Dimensions, LayoutRectangle, Pressable } from 'react-native'
-import Animated, { ZoomIn } from 'react-native-reanimated'
+import {VStyle} from 'components/types'
+import {ReactNode} from 'react'
+import {Dimensions, LayoutRectangle, Pressable} from 'react-native'
+import Animated, {ZoomIn} from 'react-native-reanimated'
 
 interface Props {
   anchorLayout: LayoutRectangle
   children: ReactNode
 }
 
-const PositionModalLayout = ({anchorLayout, children}:Props) => {
+const PositionModalLayout = ({anchorLayout, children}: Props) => {
   const {x, y, width, height} = anchorLayout
   const windowWidth = Dimensions.get('window').width
   const isLeftOfScreen = x + width / 2 < windowWidth / 2
