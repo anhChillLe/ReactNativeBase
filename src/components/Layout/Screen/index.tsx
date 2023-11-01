@@ -1,7 +1,17 @@
+import {useHeaderHeight} from '@react-navigation/elements'
+import Fill from 'components/Layout/Fill'
+import KeyboardDismiss from 'components/Layout/KeyboardDismiss'
 import {useAppTheme} from 'components/theme'
 import {ScreenProps} from 'components/types'
 import {FC} from 'react'
-import {SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+} from 'react-native'
 
 const Screen: FC<ScreenProps> = ({
   style,
@@ -16,21 +26,25 @@ const Screen: FC<ScreenProps> = ({
     isDark,
     colors: {background},
   } = useAppTheme()
-  const Container = scrollable ? ScrollView : View
+  const headerHeight = useHeaderHeight()
+
+  const Container = scrollable ? ScrollView : dismissKeyboard ? KeyboardDismiss : Fill
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: background}]}>
+    <SafeAreaView style={styles.container}>
       <StatusBar
         backgroundColor={background}
         barStyle={isDark ? 'light-content' : 'dark-content'}
       />
       {appBar}
-      <Container
-        style={[styles.container, style]}
-        automaticallyAdjustKeyboardInsets
-        {...props}>
-        {children}
-      </Container>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={headerHeight}>
+        <Container style={[styles.container, style]} {...props}>
+          {children}
+        </Container>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }

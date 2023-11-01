@@ -19,6 +19,11 @@ const TextField: ForwardRefRenderFunction<Partial<TextInput>, TextFieldProps> = 
     Trailing,
     theme: overideTheme,
     style,
+    disabled,
+    editable,
+    onFocus,
+    onBlur,
+    onPress,
     ...props
   },
   ref,
@@ -26,13 +31,6 @@ const TextField: ForwardRefRenderFunction<Partial<TextInput>, TextFieldProps> = 
   const theme = useAppTheme(overideTheme)
   const [isFocused, setFocused] = useState(false)
   const input = useRef<TextInput>(null)
-  const focus = () => {
-    input.current?.focus()
-  }
-  const blur = () => {
-    input.current?.blur()
-  }
-
   const styles = (() => {
     switch (mode) {
       case 'underlined':
@@ -49,19 +47,33 @@ const TextField: ForwardRefRenderFunction<Partial<TextInput>, TextFieldProps> = 
   }))
 
   return (
-    <Pressable style={[staticStyles.container, styles.container]} onPress={focus}>
+    <Pressable
+      style={[staticStyles.container, styles.container, {opacity: disabled ? 0.75 : 1}]}
+      onPress={(e) => {
+        input.current?.focus()
+        onPress && onPress(e)
+      }}
+      // disabled={disabled || !(editable == false)}
+      >
       {Leading && (
         <Leading width={18} height={18} onPress={onLeadingPress} fill={styles.icon.color} />
       )}
       <TextInput
         style={[theme.typography['bodyMedium'], styles.input, staticStyles.input]}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        onFocus={e => {
+          onFocus && onFocus(e)
+          setFocused(true)
+        }}
+        onBlur={e => {
+          onBlur && onBlur(e)
+          setFocused(false)
+        }}
         blurOnSubmit
         cursorColor={theme.colors[variant]}
         selectionColor={theme.colors[variant]}
         placeholderTextColor={styles.input.color + Math.floor(0.25 * 255)}
         ref={input}
+        editable={disabled != undefined ? !disabled : editable}
         {...props}
       />
       {Trailing && (

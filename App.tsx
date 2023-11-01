@@ -1,14 +1,17 @@
-import { ModalProvider, ThemeProvider } from 'components'
+import {ModalProvider, ThemeProvider} from 'components'
 import RootNavigation from 'navigations/root'
 import React from 'react'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <ModalProvider>
-        <RootNavigation />
-      </ModalProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <ModalProvider>
+          <RootNavigation />
+        </ModalProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   )
 }
 

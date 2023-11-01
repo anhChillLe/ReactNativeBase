@@ -1,6 +1,6 @@
 import { useAppTheme } from 'components/theme'
 import { VStyle } from 'components/types'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Modal, ModalProps, Pressable, StyleSheet } from 'react-native'
 import Animated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated'
 
@@ -21,6 +21,8 @@ const ModalContainer: FC<ModalBackdropProps> = ({
   opacity = 0.25,
   ...props
 }) => {
+  const [modalVisible, setModalVisible] = useState(false)
+
   return (
     <Modal
       visible={visible}

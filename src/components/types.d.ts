@@ -56,10 +56,12 @@ interface IconButtonProps extends ButtonBaseProps {
 }
 
 interface TextFieldProps extends Omit<TextInputProps, 'ref'> {
+  onPress?: (e?: GestureResponderEvent) => void
   Leading?: Icon
   onLeadingPress?: (e: GestureResponderEvent) => void
   Trailing?: Icon
   onTrailingPress?: (e: GestureResponderEvent) => void
+  disabled?: boolean
   variant?: TextFieldVariant
   mode?: TextFieldMode
   theme?: AppTheme
@@ -92,7 +94,7 @@ interface RadioButtonProps extends CheckableProps {
   variant?: CheckBoxVariant
 }
 
-interface ScreenProps extends ViewProps {
+type ScreenProps = ViewProps & {
   scrollable?: boolean
   appBar?: ReactElement
   dismissKeyboard?: boolean

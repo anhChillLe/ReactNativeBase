@@ -1,14 +1,14 @@
 import {PosisionModalLayout} from 'components'
 import {useModal} from 'components/Provider/Modal'
 import {FC, ReactElement, useRef} from 'react'
-import {Pressable, StyleSheet, View} from 'react-native'
+import {GestureResponderEvent, Pressable, StyleSheet, View} from 'react-native'
 
 interface Props {
   children: ReactElement
-  anchor: ReactElement
+  Anchor: ({onRequestOpen}:{onRequestOpen: (e: GestureResponderEvent) => void}) =>  ReactElement
 }
 
-const Menu: FC<Props> = ({children, anchor}) => {
+const Menu: FC<Props> = ({children, Anchor}) => {
   const {push} = useModal()
   const ref = useRef<View>(null)
 
@@ -26,8 +26,7 @@ const Menu: FC<Props> = ({children, anchor}) => {
 
   return (
     <View ref={ref}>
-      {anchor}
-      <Pressable style={StyleSheet.absoluteFill} onPress={openMenu} />
+      <Anchor onRequestOpen={openMenu}/>
     </View>
   )
 }
